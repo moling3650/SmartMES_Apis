@@ -27,6 +27,11 @@ namespace SmartMES_Apis
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigin",
+                    builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            });
             services.AddDbContext<dbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DB_DEV")));
             services.AddSwaggerGen(options =>
             {
@@ -42,6 +47,7 @@ namespace SmartMES_Apis
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseCors("AllowAllOrigin");
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
