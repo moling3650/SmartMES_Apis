@@ -1,0 +1,127 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using SmartMES_Apis.Models;
+
+namespace SmartMES_Apis.Controllers.Mould
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    [EnableCors("AllowAllOrigin")]
+    public class MouldKindPropertiesController : ControllerBase
+    {
+        private readonly dbContext _context;
+
+        public MouldKindPropertiesController(dbContext context)
+        {
+            _context = context;
+        }
+
+        // GET: api/MouldKindProperties
+        [HttpGet]
+        public IEnumerable<BMouldKindProperty> GetBMouldKindProperty()
+        {
+            return _context.BMouldKindProperty;
+        }
+
+        // GET: api/MouldKindProperties/5
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetBMouldKindProperty([FromRoute] int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var bMouldKindProperty = await _context.BMouldKindProperty.FindAsync(id);
+
+            if (bMouldKindProperty == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(bMouldKindProperty);
+        }
+
+        // PUT: api/MouldKindProperties/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutBMouldKindProperty([FromRoute] int id, [FromBody] BMouldKindProperty bMouldKindProperty)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != bMouldKindProperty.PptId)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(bMouldKindProperty).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!BMouldKindPropertyExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        // POST: api/MouldKindProperties
+        [HttpPost]
+        public async Task<IActionResult> PostBMouldKindProperty([FromBody] BMouldKindProperty bMouldKindProperty)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _context.BMouldKindProperty.Add(bMouldKindProperty);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetBMouldKindProperty", new { id = bMouldKindProperty.PptId }, bMouldKindProperty);
+        }
+
+        // DELETE: api/MouldKindProperties/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteBMouldKindProperty([FromRoute] int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var bMouldKindProperty = await _context.BMouldKindProperty.FindAsync(id);
+            if (bMouldKindProperty == null)
+            {
+                return NotFound();
+            }
+
+            _context.BMouldKindProperty.Remove(bMouldKindProperty);
+            await _context.SaveChangesAsync();
+
+            return Ok(bMouldKindProperty);
+        }
+
+        private bool BMouldKindPropertyExists(int id)
+        {
+            return _context.BMouldKindProperty.Any(e => e.PptId == id);
+        }
+    }
+}
