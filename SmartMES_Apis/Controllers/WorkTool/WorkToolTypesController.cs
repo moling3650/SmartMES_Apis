@@ -13,23 +13,23 @@ namespace SmartMES_Apis.Controllers.WorkTool
     [Route("api/[controller]")]
     [ApiController]
     [EnableCors("AllowAllOrigin")]
-    public class BWorkToolTypesController : ControllerBase
+    public class WorkToolTypesController : ControllerBase
     {
         private readonly dbContext _context;
 
-        public BWorkToolTypesController(dbContext context)
+        public WorkToolTypesController(dbContext context)
         {
             _context = context;
         }
 
-        // GET: api/BWorkToolTypes
+        // GET: api/WorkToolTypes
         [HttpGet]
         public IEnumerable<BWorkToolType> GetBWorkToolType()
         {
             return _context.BWorkToolType;
         }
 
-        // GET: api/BWorkToolTypes/5
+        // GET: api/WorkToolTypes/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetBWorkToolType([FromRoute] int id)
         {
@@ -48,7 +48,7 @@ namespace SmartMES_Apis.Controllers.WorkTool
             return Ok(bWorkToolType);
         }
 
-        // PUT: api/BWorkToolTypes/5
+        // PUT: api/WorkToolTypes/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBWorkToolType([FromRoute] int id, [FromBody] BWorkToolType bWorkToolType)
         {
@@ -83,7 +83,7 @@ namespace SmartMES_Apis.Controllers.WorkTool
             return NoContent();
         }
 
-        // POST: api/BWorkToolTypes
+        // POST: api/WorkToolTypes
         [HttpPost]
         public async Task<IActionResult> PostBWorkToolType([FromBody] BWorkToolType bWorkToolType)
         {
@@ -98,7 +98,7 @@ namespace SmartMES_Apis.Controllers.WorkTool
             return CreatedAtAction("GetBWorkToolType", new { id = bWorkToolType.TypeId }, bWorkToolType);
         }
 
-        // DELETE: api/BWorkToolTypes/5
+        // DELETE: api/WorkToolTypes/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBWorkToolType([FromRoute] int id)
         {
