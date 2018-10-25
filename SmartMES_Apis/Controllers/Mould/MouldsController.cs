@@ -24,8 +24,12 @@ namespace SmartMES_Apis.Controllers.Mould
 
         // GET: api/Moulds
         [HttpGet]
-        public IEnumerable<BMoulds> GetBMoulds()
+        public IEnumerable<BMoulds> GetBMoulds([FromQuery] string modelCode)
         {
+            if (!String.IsNullOrEmpty(modelCode))
+            {
+                return _context.BMoulds.Where(item => item.ModelCode.Equals(modelCode));
+            }
             return _context.BMoulds;
         }
 

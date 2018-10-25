@@ -24,14 +24,18 @@ namespace SmartMES_Apis.Controllers.Mould
 
         // GET: api/MouldKinds
         [HttpGet]
-        public IEnumerable<BMouldKinds> GetBMouldKinds()
+        public IEnumerable<BMouldKinds> GetBMouldKinds([FromQuery] int? typeId)
         {
+            if (typeId != null)
+            {
+                return _context.BMouldKinds.Where(item => item.TypeId == typeId);
+            }
             return _context.BMouldKinds;
         }
 
         // GET: api/MouldKinds/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetBMouldKinds([FromRoute] int id)
+        public async Task<IActionResult> GetBMouldKind([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {

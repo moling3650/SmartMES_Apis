@@ -24,10 +24,15 @@ namespace SmartMES_Apis.Controllers.Mould
 
         // GET: api/MouldModels
         [HttpGet]
-        public IEnumerable<BMouldModel> GetBMouldModel()
+        public IEnumerable<BMouldModel> GetBMouldModel([FromQuery] int? kindId)
         {
+            if (kindId != null)
+            {
+                return _context.BMouldModel.Where(item => item.KindId == kindId);
+            }
             return _context.BMouldModel;
         }
+
 
         // GET: api/MouldModels/5
         [HttpGet("{id}")]
