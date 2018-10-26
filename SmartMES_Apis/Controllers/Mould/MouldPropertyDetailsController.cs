@@ -24,8 +24,12 @@ namespace SmartMES_Apis.Controllers.Mould
 
         // GET: api/MouldPropertyDetails
         [HttpGet]
-        public IEnumerable<BMouldPropertyDetail> GetBMouldPropertyDetail()
+        public IEnumerable<BMouldPropertyDetail> GetBMouldPropertyDetail([FromQuery] string mouldCode )
         {
+            if (!String.IsNullOrWhiteSpace(mouldCode))
+            {
+                return _context.BMouldPropertyDetail.Where(item => item.MouldCode.Equals(mouldCode));
+            }
             return _context.BMouldPropertyDetail;
         }
 

@@ -24,8 +24,19 @@ namespace SmartMES_Apis.Controllers.Mould
 
         // GET: api/MouldKindProperties
         [HttpGet]
-        public IEnumerable<BMouldKindProperty> GetBMouldKindProperty()
+        public IEnumerable<BMouldKindProperty> GetBMouldKindProperty([FromQuery] string modelCode)
         {
+            if (!String.IsNullOrWhiteSpace(modelCode))
+            {
+                int? kindId = _context.BMouldModel.Where(item => item.ModelCode.Equals(modelCode)).FirstOrDefault()?.KindId;
+                if (kindId != null)
+                {
+                    return _context.BMouldKindProperty.Where(item => item.KindId == kindId);
+                } else
+                {
+                    return new List<BMouldKindProperty>();
+                }
+            }
             return _context.BMouldKindProperty;
         }
 
