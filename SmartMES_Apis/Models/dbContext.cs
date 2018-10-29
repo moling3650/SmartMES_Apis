@@ -34,6 +34,7 @@ namespace SmartMES_Apis.Models
         public virtual DbSet<BMachineDataPoint> BMachineDataPoint { get; set; }
         public virtual DbSet<BMachineFaultphenomenon> BMachineFaultphenomenon { get; set; }
         public virtual DbSet<BMachineFaultreason> BMachineFaultreason { get; set; }
+        public virtual DbSet<BMachineKindProperty> BMachineKindProperty { get; set; }
         public virtual DbSet<BMachineKinds> BMachineKinds { get; set; }
         public virtual DbSet<BMachineModel> BMachineModel { get; set; }
         public virtual DbSet<BMachineMouldKinds> BMachineMouldKinds { get; set; }
@@ -41,7 +42,6 @@ namespace SmartMES_Apis.Models
         public virtual DbSet<BMachineStandardPoints> BMachineStandardPoints { get; set; }
         public virtual DbSet<BMachineStopreason> BMachineStopreason { get; set; }
         public virtual DbSet<BMachineType> BMachineType { get; set; }
-        public virtual DbSet<BMachineTypeProperty> BMachineTypeProperty { get; set; }
         public virtual DbSet<BMachineWorkToolsKinds> BMachineWorkToolsKinds { get; set; }
         public virtual DbSet<BMaintenance> BMaintenance { get; set; }
         public virtual DbSet<BMaterial> BMaterial { get; set; }
@@ -841,6 +841,27 @@ namespace SmartMES_Apis.Models
                     .HasMaxLength(50);
             });
 
+            modelBuilder.Entity<BMachineKindProperty>(entity =>
+            {
+                entity.HasKey(e => e.PptId);
+
+                entity.ToTable("B_Machine_Kind_Property");
+
+                entity.Property(e => e.PptId).HasColumnName("ppt_id");
+
+                entity.Property(e => e.Description)
+                    .HasColumnName("description")
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.KindId).HasColumnName("kind_id");
+
+                entity.Property(e => e.PptName)
+                    .HasColumnName("ppt_name")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.PptType).HasColumnName("ppt_type");
+            });
+
             modelBuilder.Entity<BMachineKinds>(entity =>
             {
                 entity.HasKey(e => e.KindId);
@@ -1018,27 +1039,6 @@ namespace SmartMES_Apis.Models
                     .IsRequired()
                     .HasColumnName("type_name")
                     .HasMaxLength(50);
-            });
-
-            modelBuilder.Entity<BMachineTypeProperty>(entity =>
-            {
-                entity.HasKey(e => e.PptId);
-
-                entity.ToTable("B_Machine_Type_Property");
-
-                entity.Property(e => e.PptId).HasColumnName("ppt_id");
-
-                entity.Property(e => e.Description)
-                    .HasColumnName("description")
-                    .HasMaxLength(100);
-
-                entity.Property(e => e.KindId).HasColumnName("kind_id");
-
-                entity.Property(e => e.PptName)
-                    .HasColumnName("ppt_name")
-                    .HasMaxLength(20);
-
-                entity.Property(e => e.PptType).HasColumnName("ppt_type");
             });
 
             modelBuilder.Entity<BMachineWorkToolsKinds>(entity =>
@@ -1350,7 +1350,7 @@ namespace SmartMES_Apis.Models
             {
                 entity.ToTable("B_Moulds");
 
-                entity.Property(e => e.Id).HasColumnName("ID");
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Description)
                     .HasColumnName("description")

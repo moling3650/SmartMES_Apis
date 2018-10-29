@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SmartMES_Apis.Models
 {
-    public partial class BMachineTypeProperty
+    public partial class BMachineKindProperty
     {
         public int PptId { get; set; }
         public int KindId { get; set; }
