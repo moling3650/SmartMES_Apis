@@ -5698,9 +5698,7 @@ namespace SmartMES_Apis.Models
 
                 entity.Property(e => e.Property).HasColumnName("property");
 
-                entity.Property(e => e.TypeId)
-                    .HasColumnName("type_id")
-                    .HasMaxLength(50);
+                entity.Property(e => e.TypeId).HasColumnName("type_id");
             });
 
             modelBuilder.Entity<SEmpInRole>(entity =>
