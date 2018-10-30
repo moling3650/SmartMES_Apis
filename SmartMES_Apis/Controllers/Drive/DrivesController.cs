@@ -8,61 +8,65 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SmartMES_Apis.Models;
 
-namespace SmartMES_Apis.Controllers
+namespace SmartMES_Apis.Controllers.Drive
 {
     [Route("api/[controller]")]
     [ApiController]
     [EnableCors("AllowAllOrigin")]
-    public class DriveTypesController : ControllerBase
+    public class DrivesController : ControllerBase
     {
         private readonly dbContext _context;
 
-        public DriveTypesController(dbContext context)
+        public DrivesController(dbContext context)
         {
             _context = context;
         }
 
-        // GET: api/DriveTypes
+        // GET: api/Drives
         [HttpGet]
-        public IEnumerable<BDriveType> GetBDriveType()
+        public IEnumerable<SDriveList> GetSDriveList([FromQuery] string typeId)
         {
-            return _context.BDriveType;
+            if (!String.IsNullOrWhiteSpace(typeId))
+            {
+                return _context.SDriveList.Where(item => item.TypeId.Equals(typeId));
+            }
+            return _context.SDriveList;
         }
 
-        // GET: api/DriveTypes/5
+        // GET: api/Drives/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetBDriveType([FromRoute] int id)
+        public async Task<IActionResult> GetSDriveList([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var bDriveType = await _context.BDriveType.FindAsync(id);
+            var sDriveList = await _context.SDriveList.FindAsync(id);
 
-            if (bDriveType == null)
+            if (sDriveList == null)
             {
                 return NotFound();
             }
 
-            return Ok(bDriveType);
+            return Ok(sDriveList);
         }
 
-        // PUT: api/DriveTypes/5
+        // PUT: api/Drives/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBDriveType([FromRoute] int id, [FromBody] BDriveType bDriveType)
+        public async Task<IActionResult> PutSDriveList([FromRoute] int id, [FromBody] SDriveList sDriveList)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != bDriveType.TypeId)
+            if (id != sDriveList.DriveId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(bDriveType).State = EntityState.Modified;
+            _context.Entry(sDriveList).State = EntityState.Modified;
 
             try
             {
@@ -70,7 +74,7 @@ namespace SmartMES_Apis.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!BDriveTypeExists(id))
+                if (!SDriveListExists(id))
                 {
                     return NotFound();
                 }
@@ -83,45 +87,45 @@ namespace SmartMES_Apis.Controllers
             return NoContent();
         }
 
-        // POST: api/DriveTypes
+        // POST: api/Drives
         [HttpPost]
-        public async Task<IActionResult> PostBDriveType([FromBody] BDriveType bDriveType)
+        public async Task<IActionResult> PostSDriveList([FromBody] SDriveList sDriveList)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.BDriveType.Add(bDriveType);
+            _context.SDriveList.Add(sDriveList);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetBDriveType", new { id = bDriveType.TypeId }, bDriveType);
+            return CreatedAtAction("GetSDriveList", new { id = sDriveList.DriveId }, sDriveList);
         }
 
-        // DELETE: api/DriveTypes/5
+        // DELETE: api/Drives/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBDriveType([FromRoute] int id)
+        public async Task<IActionResult> DeleteSDriveList([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var bDriveType = await _context.BDriveType.FindAsync(id);
-            if (bDriveType == null)
+            var sDriveList = await _context.SDriveList.FindAsync(id);
+            if (sDriveList == null)
             {
                 return NotFound();
             }
 
-            _context.BDriveType.Remove(bDriveType);
+            _context.SDriveList.Remove(sDriveList);
             await _context.SaveChangesAsync();
 
-            return Ok(bDriveType);
+            return Ok(sDriveList);
         }
 
-        private bool BDriveTypeExists(int id)
+        private bool SDriveListExists(int id)
         {
-            return _context.BDriveType.Any(e => e.TypeId == id);
+            return _context.SDriveList.Any(e => e.DriveId == id);
         }
     }
 }
