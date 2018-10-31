@@ -39,7 +39,7 @@ namespace SmartMES_Apis.Models
         public virtual DbSet<BMachineModel> BMachineModel { get; set; }
         public virtual DbSet<BMachineMouldKinds> BMachineMouldKinds { get; set; }
         public virtual DbSet<BMachinePropertyDetail> BMachinePropertyDetail { get; set; }
-        public virtual DbSet<BMachineStandardPoints> BMachineStandardPoints { get; set; }
+        public virtual DbSet<BMachineStandardPoint> BMachineStandardPoint { get; set; }
         public virtual DbSet<BMachineStopreason> BMachineStopreason { get; set; }
         public virtual DbSet<BMachineType> BMachineType { get; set; }
         public virtual DbSet<BMachineWorkToolsKinds> BMachineWorkToolsKinds { get; set; }
@@ -179,7 +179,7 @@ namespace SmartMES_Apis.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=192.168.0.26;Database=SMART_MES;UID=sa;Pwd=1234;");
+                optionsBuilder.UseSqlServer("Server=192.168.0.126;Database=SMART_MES;UID=sa;Pwd=1234;");
             }
         }
 
@@ -964,18 +964,19 @@ namespace SmartMES_Apis.Models
                     .HasMaxLength(50);
             });
 
-            modelBuilder.Entity<BMachineStandardPoints>(entity =>
+            modelBuilder.Entity<BMachineStandardPoint>(entity =>
             {
                 entity.HasKey(e => e.Id)
                     .ForSqlServerIsClustered(false);
 
-                entity.ToTable("B_Machine_Standard_Points");
+                entity.ToTable("B_Machine_Standard_Point");
 
                 entity.Property(e => e.Id)
-                    .HasColumnName("ID")
+                    .HasColumnName("id")
                     .ValueGeneratedNever();
 
                 entity.Property(e => e.BusinessCode)
+                    .IsRequired()
                     .HasColumnName("business_code")
                     .HasMaxLength(30);
 
@@ -988,16 +989,19 @@ namespace SmartMES_Apis.Models
                     .HasMaxLength(30);
 
                 entity.Property(e => e.MachineCode)
+                    .IsRequired()
                     .HasColumnName("machine_code")
                     .HasMaxLength(30);
 
                 entity.Property(e => e.Parameter)
                     .HasColumnName("parameter")
-                    .HasMaxLength(50);
+                    .HasMaxLength(500);
 
                 entity.Property(e => e.PointId).HasColumnName("point_id");
 
                 entity.Property(e => e.TriggerCondition).HasColumnName("trigger_condition");
+
+                entity.Property(e => e.TriggerType).HasColumnName("trigger_type");
             });
 
             modelBuilder.Entity<BMachineStopreason>(entity =>
