@@ -10,6 +10,7 @@ namespace SmartMES_Apis.Models
         public string ParentOrder { get; set; }
         public string ProductCode { get; set; }
         public decimal? Qty { get; set; }
+        public decimal? CpltQty { get; set; }
         public string Co { get; set; }
         public int? Urgency { get; set; }
         public int? State { get; set; }

@@ -999,6 +999,8 @@ namespace SmartMES_Apis.Models
 
                 entity.Property(e => e.PointId).HasColumnName("point_id");
 
+                entity.Property(e => e.RunAt).HasColumnName("run_at");
+
                 entity.Property(e => e.TriggerCondition).HasColumnName("trigger_condition");
 
                 entity.Property(e => e.TriggerType).HasColumnName("trigger_type");
@@ -5551,6 +5553,10 @@ namespace SmartMES_Apis.Models
                     .HasMaxLength(40);
 
                 entity.Property(e => e.Co).HasColumnName("CO");
+
+                entity.Property(e => e.CpltQty)
+                    .HasColumnName("cplt_qty")
+                    .HasColumnType("decimal(10, 3)");
 
                 entity.Property(e => e.Customer)
                     .HasColumnName("customer")
