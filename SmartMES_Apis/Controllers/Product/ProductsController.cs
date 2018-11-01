@@ -29,6 +29,21 @@ namespace SmartMES_Apis.Controllers.Product
             return _context.BProduct;
         }
 
+        [HttpGet("CascaderOptions")]
+        public IQueryable GetBProductCascaderOptions()
+        {
+            return _context.BProductType.GroupJoin(_context.BProduct, 
+                                              pt => pt.Typecode,
+                                              p => p.Typecode,
+                                              (pt, pList) => 
+                                              new
+                                              {
+                                                  value = pt.Typecode,
+                                                  label = pt.TypeName,
+                                                  children = pList.Select(p => new { value = p.ProductCode, label = p.ProductName })
+                                              });
+        }
+
         // GET: api/Products/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetBProduct([FromRoute] int id)
