@@ -52,6 +52,17 @@ namespace SmartMES_Apis.Controllers.Machine
             return Ok(bMachineStandardPoint);
         }
 
+        [HttpGet("Validate")]
+        public bool ValidateBMachineStandardPoint([FromQuery] string machineCode, [FromQuery] string businessCode)
+        {
+            if (String.IsNullOrWhiteSpace(machineCode) || String.IsNullOrWhiteSpace(businessCode))
+            {
+                return false;
+            }
+            return !_context.BMachineStandardPoint.Any(p => p.MachineCode.Equals(machineCode) && p.BusinessCode.Equals(businessCode));
+        }
+
+
         // PUT: api/MachineStandardPoints/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBMachineStandardPoint([FromRoute] int id, [FromBody] BMachineStandardPoint bMachineStandardPoint)
