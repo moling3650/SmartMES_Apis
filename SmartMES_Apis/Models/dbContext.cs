@@ -971,9 +971,7 @@ namespace SmartMES_Apis.Models
 
                 entity.ToTable("B_Machine_Standard_Point");
 
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.BusinessCode)
                     .IsRequired()
@@ -5501,6 +5499,10 @@ namespace SmartMES_Apis.Models
                 entity.Property(e => e.MouldCode)
                     .HasColumnName("mould_code")
                     .HasMaxLength(20);
+
+                entity.Property(e => e.NgQty)
+                    .HasColumnName("ng_qty")
+                    .HasColumnType("decimal(10, 3)");
 
                 entity.Property(e => e.OrderNo)
                     .HasColumnName("order_no")
