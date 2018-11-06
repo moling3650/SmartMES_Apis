@@ -662,9 +662,9 @@ namespace SmartMES_Apis.Models
                     .HasColumnName("expect_nexttime")
                     .HasColumnType("datetime");
 
-                entity.Property(e => e.ImgUrl)
-                    .HasColumnName("img_url")
-                    .HasMaxLength(100);
+                entity.Property(e => e.Img)
+                    .HasColumnName("img")
+                    .HasColumnType("image");
 
                 entity.Property(e => e.MachineCode)
                     .IsRequired()

@@ -20,6 +20,6 @@ namespace SmartMES_Apis.Models
         public string Department { get; set; }
         public string WsCode { get; set; }
         public string Description { get; set; }
-        public string ImgUrl { get; set; }
+        public byte[] Img { get; set; }
     }
 }
