@@ -650,6 +650,10 @@ namespace SmartMES_Apis.Models
                     .HasColumnName("arrivaldate")
                     .HasColumnType("date");
 
+                entity.Property(e => e.Department)
+                    .HasColumnName("department")
+                    .HasMaxLength(50);
+
                 entity.Property(e => e.Description)
                     .HasColumnName("description")
                     .HasMaxLength(200);
@@ -671,27 +675,18 @@ namespace SmartMES_Apis.Models
                     .HasColumnName("machine_name")
                     .HasMaxLength(50);
 
-                entity.Property(e => e.MaintainCycle).HasColumnName("maintain_cycle");
-
-                entity.Property(e => e.MaintainQuantity).HasColumnName("maintain_quantity");
-
-                entity.Property(e => e.MaintainType).HasColumnName("maintain_type");
-
                 entity.Property(e => e.Manufacturer)
                     .HasColumnName("manufacturer")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.Model)
-                    .HasColumnName("model")
                     .HasMaxLength(50);
 
                 entity.Property(e => e.ModelCode)
                     .HasColumnName("model_code")
                     .HasMaxLength(50);
 
-                entity.Property(e => e.Ofstation)
-                    .HasColumnName("ofstation")
-                    .HasMaxLength(50);
+                entity.Property(e => e.ProcessingQty)
+                    .HasColumnName("processingQty")
+                    .HasColumnType("decimal(10, 3)")
+                    .HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.SimpleName)
                     .HasColumnName("simple_name")
@@ -707,14 +702,6 @@ namespace SmartMES_Apis.Models
                     .IsRequired()
                     .HasColumnName("use_state")
                     .HasMaxLength(10)
-                    .HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.Userdepartment)
-                    .HasColumnName("userdepartment")
-                    .HasMaxLength(50);
-
-                entity.Property(e => e.Userqty)
-                    .HasColumnType("decimal(10, 3)")
                     .HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.WsCode)

@@ -13,16 +13,11 @@ namespace SmartMES_Apis.Models
         public int? TypeId { get; set; }
         public int? State { get; set; }
         public string UseState { get; set; }
-        public string Ofstation { get; set; }
-        public int? MaintainCycle { get; set; }
-        public int? MaintainQuantity { get; set; }
-        public decimal? Userqty { get; set; }
-        public int? MaintainType { get; set; }
-        public string Model { get; set; }
+        public decimal? ProcessingQty { get; set; }
         public string Manufacturer { get; set; }
         public DateTime? Arrivaldate { get; set; }
         public DateTime? ExpectNexttime { get; set; }
-        public string Userdepartment { get; set; }
+        public string Department { get; set; }
         public string WsCode { get; set; }
         public string Description { get; set; }
         public string ImgUrl { get; set; }
