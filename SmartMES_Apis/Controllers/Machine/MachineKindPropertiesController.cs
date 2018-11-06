@@ -127,6 +127,8 @@ namespace SmartMES_Apis.Controllers.Machine
             {
                 return NotFound();
             }
+            var details = _context.BMachinePropertyDetail.Where(e => e.PptId == id);
+            _context.BMachinePropertyDetail.RemoveRange(details);
 
             _context.BMachineKindProperty.Remove(bMachineKindProperty);
             await _context.SaveChangesAsync();

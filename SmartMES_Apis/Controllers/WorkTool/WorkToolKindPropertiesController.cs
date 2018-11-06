@@ -127,6 +127,8 @@ namespace SmartMES_Apis.Controllers.WorkTool
             {
                 return NotFound();
             }
+            var details = _context.BWorkToolPropertyDetail.Where(e => e.PptId == id);
+            _context.BWorkToolPropertyDetail.RemoveRange(details);
 
             _context.BWorkToolKindProperty.Remove(bWorkToolKindProperty);
             await _context.SaveChangesAsync();

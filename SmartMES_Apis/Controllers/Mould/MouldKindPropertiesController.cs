@@ -127,6 +127,8 @@ namespace SmartMES_Apis.Controllers.Mould
             {
                 return NotFound();
             }
+            var details = _context.BMouldPropertyDetail.Where(e => e.PptId == id);
+            _context.BMouldPropertyDetail.RemoveRange(details);
 
             _context.BMouldKindProperty.Remove(bMouldKindProperty);
             await _context.SaveChangesAsync();
