@@ -31,6 +31,7 @@ namespace SmartMES_Apis.Models
         public virtual DbSet<BLine> BLine { get; set; }
         public virtual DbSet<BMachine> BMachine { get; set; }
         public virtual DbSet<BMachineAccessories> BMachineAccessories { get; set; }
+        public virtual DbSet<BMachineAnalogPoint> BMachineAnalogPoint { get; set; }
         public virtual DbSet<BMachineDataPoint> BMachineDataPoint { get; set; }
         public virtual DbSet<BMachineFaultphenomenon> BMachineFaultphenomenon { get; set; }
         public virtual DbSet<BMachineFaultreason> BMachineFaultreason { get; set; }
@@ -64,7 +65,8 @@ namespace SmartMES_Apis.Models
         public virtual DbSet<BPointTranslation> BPointTranslation { get; set; }
         public virtual DbSet<BPointType> BPointType { get; set; }
         public virtual DbSet<BPreStep> BPreStep { get; set; }
-        public virtual DbSet<BProcessControl> BProcessControl { get; set; }
+        public virtual DbSet<BProcessControlItem> BProcessControlItem { get; set; }
+        public virtual DbSet<BProcessControlItemDetail> BProcessControlItemDetail { get; set; }
         public virtual DbSet<BProcessFlow> BProcessFlow { get; set; }
         public virtual DbSet<BProcessFlowDetail> BProcessFlowDetail { get; set; }
         public virtual DbSet<BProcessList> BProcessList { get; set; }
@@ -747,6 +749,34 @@ namespace SmartMES_Apis.Models
                 entity.Property(e => e.MachineCode)
                     .HasColumnName("machine_code")
                     .HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<BMachineAnalogPoint>(entity =>
+            {
+                entity.ToTable("B_Machine_Analog_Point");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.BusinessCode)
+                    .IsRequired()
+                    .HasColumnName("business_code")
+                    .HasMaxLength(30);
+
+                entity.Property(e => e.BusinessName)
+                    .IsRequired()
+                    .HasColumnName("business_name")
+                    .HasMaxLength(30);
+
+                entity.Property(e => e.ControlId).HasColumnName("control_id");
+
+                entity.Property(e => e.MachineCode)
+                    .IsRequired()
+                    .HasColumnName("machine_code")
+                    .HasMaxLength(30);
+
+                entity.Property(e => e.PointId).HasColumnName("point_id");
+
+                entity.Property(e => e.RunAt).HasColumnName("run_at");
             });
 
             modelBuilder.Entity<BMachineDataPoint>(entity =>
@@ -1675,13 +1705,14 @@ namespace SmartMES_Apis.Models
                 entity.Property(e => e.Unit).HasMaxLength(50);
             });
 
-            modelBuilder.Entity<BProcessControl>(entity =>
+            modelBuilder.Entity<BProcessControlItem>(entity =>
             {
-                entity.ToTable("B_ProcessControl");
+                entity.ToTable("B_ProcessControlItem");
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.ControlName)
+                    .IsRequired()
                     .HasColumnName("control_name")
                     .HasMaxLength(50);
 
@@ -1691,11 +1722,48 @@ namespace SmartMES_Apis.Models
 
                 entity.Property(e => e.InputTime)
                     .HasColumnName("input_time")
-                    .HasColumnType("datetime");
+                    .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.ProcessCode)
+                    .IsRequired()
                     .HasColumnName("process_code")
                     .HasMaxLength(30);
+            });
+
+            modelBuilder.Entity<BProcessControlItemDetail>(entity =>
+            {
+                entity.ToTable("B_ProcessControlItem_Detail");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.ControlId).HasColumnName("control_id");
+
+                entity.Property(e => e.DriveCode)
+                    .IsRequired()
+                    .HasColumnName("drive_code")
+                    .HasMaxLength(30);
+
+                entity.Property(e => e.GroupCount).HasColumnName("group_count");
+
+                entity.Property(e => e.Lcl)
+                    .HasColumnName("lcl")
+                    .HasColumnType("decimal(10, 2)");
+
+                entity.Property(e => e.Parameter)
+                    .HasColumnName("parameter")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Pid).HasColumnName("pid");
+
+                entity.Property(e => e.ToMonitor).HasColumnName("to_monitor");
+
+                entity.Property(e => e.TriggerCondition).HasColumnName("trigger_condition");
+
+                entity.Property(e => e.TriggerType).HasColumnName("trigger_type");
+
+                entity.Property(e => e.Ucl)
+                    .HasColumnName("ucl")
+                    .HasColumnType("decimal(10, 2)");
             });
 
             modelBuilder.Entity<BProcessFlow>(entity =>
