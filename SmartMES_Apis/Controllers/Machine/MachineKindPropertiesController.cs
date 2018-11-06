@@ -24,21 +24,24 @@ namespace SmartMES_Apis.Controllers.Machine
 
         // GET: api/MachineKindProperties
         [HttpGet]
-        public IEnumerable<BMachineKindProperty> GetBMachineKindProperty([FromQuery] string modelCode)
+        public IEnumerable<BMachineKindProperty> GetBMachineKindProperty([FromQuery] string modelCode, [FromQuery] int? kindId)
         {
+            if (String.IsNullOrWhiteSpace(modelCode) && kindId == null)
+            {
+                return _context.BMachineKindProperty;
+            }
             if (!String.IsNullOrWhiteSpace(modelCode))
             {
-                int? kindId = _context.BMachineModel.Where(item => item.ModelCode.Equals(modelCode)).FirstOrDefault()?.KindId;
-                if (kindId != null)
-                {
-                    return _context.BMachineKindProperty.Where(item => item.KindId == kindId);
-                }
-                else
-                {
-                    return new List<BMachineKindProperty>();
-                }
+                kindId = _context.BMachineModel.Where(item => item.ModelCode.Equals(modelCode)).FirstOrDefault()?.KindId;
             }
-            return _context.BMachineKindProperty;
+            if (kindId != null)
+            {
+                return _context.BMachineKindProperty.Where(item => item.KindId == kindId);
+            }
+            else
+            {
+                return new List<BMachineKindProperty>();
+            }
         }
 
         // GET: api/MachineKindProperties/5

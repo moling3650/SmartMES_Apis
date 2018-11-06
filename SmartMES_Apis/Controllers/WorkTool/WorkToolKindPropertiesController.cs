@@ -24,21 +24,24 @@ namespace SmartMES_Apis.Controllers.WorkTool
 
         // GET: api/WorkToolKindProperties
         [HttpGet]
-        public IEnumerable<BWorkToolKindProperty> GetBWorkToolKindProperty([FromQuery] string modelCode)
+        public IEnumerable<BWorkToolKindProperty> GetBWorkToolKindProperty([FromQuery] string modelCode, [FromQuery] int? kindId)
         {
+            if (String.IsNullOrWhiteSpace(modelCode) && kindId == null)
+            {
+                return _context.BWorkToolKindProperty;
+            }
             if (!String.IsNullOrWhiteSpace(modelCode))
             {
-                int? kindId = _context.BWorkToolModel.Where(item => item.ModelCode.Equals(modelCode)).FirstOrDefault()?.KindId;
-                if (kindId != null)
-                {
-                    return _context.BWorkToolKindProperty.Where(item => item.KindId == kindId);
-                }
-                else
-                {
-                    return new List<BWorkToolKindProperty>();
-                }
+                kindId = _context.BWorkToolModel.Where(item => item.ModelCode.Equals(modelCode)).FirstOrDefault()?.KindId;
             }
-            return _context.BWorkToolKindProperty;
+            if (kindId != null)
+            {
+                return _context.BWorkToolKindProperty.Where(item => item.KindId == kindId);
+            }
+            else
+            {
+                return new List<BWorkToolKindProperty>();
+            }
         }
 
         // GET: api/WorkToolKindProperties/5
