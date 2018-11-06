@@ -24,13 +24,21 @@ namespace SmartMES_Apis.Controllers.ProcessFlow
 
         // GET: api/ProcessControlItems
         [HttpGet]
-        public IEnumerable<BProcessControlItem> GetBProcessControlItem([FromQuery] string processCode)
+        public IEnumerable<BProcessControlItem> GetBProcessControlItem([FromQuery] string machineCode, [FromQuery] string stationCode, [FromQuery] string processCode)
         {
+            if (!String.IsNullOrWhiteSpace(machineCode))
+            {
+                stationCode = _context.BStationMachine.AsNoTracking().Where(e => e.MachineCode.Equals(machineCode)).FirstOrDefault()?.StationCode;
+            }
+            if (!String.IsNullOrWhiteSpace(stationCode))
+            {
+                processCode = _context.BStationList.AsNoTracking().Where(e => e.StationCode.Equals(stationCode)).FirstOrDefault()?.ProcessCode;
+            }
             if (!String.IsNullOrWhiteSpace(processCode))
             {
-                return _context.BProcessControlItem.Where(e => e.ProcessCode.Equals(processCode));
+                return _context.BProcessControlItem.AsNoTracking().Where(e => e.ProcessCode.Equals(processCode));
             }
-            return _context.BProcessControlItem;
+            return _context.BProcessControlItem.AsNoTracking();
         }
 
         // GET: api/ProcessControlItems/5
