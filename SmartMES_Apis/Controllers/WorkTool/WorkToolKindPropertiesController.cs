@@ -76,8 +76,19 @@ namespace SmartMES_Apis.Controllers.WorkTool
             {
                 return BadRequest();
             }
-
-            _context.Entry(bWorkToolKindProperty).State = EntityState.Modified;
+            var item = await _context.BWorkToolKindProperty.FindAsync(id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+            if (item.PptType != bWorkToolKindProperty.PptType)
+            {
+                var details = _context.BWorkToolPropertyDetail.Where(e => e.PptId == id);
+                _context.BWorkToolPropertyDetail.RemoveRange(details);
+            }
+            item.PptName = bWorkToolKindProperty.PptName;
+            item.PptType = bWorkToolKindProperty.PptType;
+            item.Description = bWorkToolKindProperty.Description;
 
             try
             {

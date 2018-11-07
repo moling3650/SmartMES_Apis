@@ -77,7 +77,19 @@ namespace SmartMES_Apis.Controllers.Machine
                 return BadRequest();
             }
 
-            _context.Entry(bMachineKindProperty).State = EntityState.Modified;
+            var item = await _context.BMachineKindProperty.FindAsync(id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+            if (item.PptType != bMachineKindProperty.PptType)
+            {
+                var details = _context.BMachinePropertyDetail.Where(e => e.PptId == id);
+                _context.BMachinePropertyDetail.RemoveRange(details);
+            }
+            item.PptName = bMachineKindProperty.PptName;
+            item.PptType = bMachineKindProperty.PptType;
+            item.Description = bMachineKindProperty.Description;
 
             try
             {

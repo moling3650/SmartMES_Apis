@@ -77,7 +77,19 @@ namespace SmartMES_Apis.Controllers.Mould
                 return BadRequest();
             }
 
-            _context.Entry(bMouldKindProperty).State = EntityState.Modified;
+            var item = await _context.BMouldKindProperty.FindAsync(id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+            if (item.PptType != bMouldKindProperty.PptType)
+            {
+                var details = _context.BMouldPropertyDetail.Where(e => e.PptId == id);
+                _context.BMouldPropertyDetail.RemoveRange(details);
+            }
+            item.PptName = bMouldKindProperty.PptName;
+            item.PptType = bMouldKindProperty.PptType;
+            item.Description = bMouldKindProperty.Description;
 
             try
             {
