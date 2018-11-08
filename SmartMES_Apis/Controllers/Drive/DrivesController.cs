@@ -24,11 +24,11 @@ namespace SmartMES_Apis.Controllers.Drive
 
         // GET: api/Drives
         [HttpGet]
-        public IEnumerable<SDriveList> GetSDriveList([FromQuery] int? typeId)
+        public IEnumerable<SDriveList> GetSDriveList([FromQuery] int? driveClass)
         {
-            if (typeId != null)
+            if (driveClass != null)
             {
-                return _context.SDriveList.Where(item => item.TypeId == typeId);
+                return _context.BDriveType.Where(e => e.DriveClass == driveClass).Join(_context.SDriveList, dt => dt.TypeId, d => d.TypeId, (dt, d) => d);
             }
             return _context.SDriveList;
         }
