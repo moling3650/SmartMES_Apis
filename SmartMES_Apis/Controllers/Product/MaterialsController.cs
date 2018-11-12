@@ -48,6 +48,24 @@ namespace SmartMES_Apis.Controllers.Product
             return Ok(bMaterial);
         }
 
+        // GET: api/Materials/Options
+        [HttpGet("Options")]
+        public IQueryable GetOptions([FromQuery] string flowCode)
+        {
+            var materials = from m in _context.BMaterial.AsNoTracking()
+                            select new { code = m.MatCode, name = "  物料/" + m.MatName };
+            var products = from p in _context.BProduct.AsNoTracking()
+                           select new { code = p.ProductCode, name = "半成品/" + p.ProductName };
+            var productsAndMaterials = products.Union(materials);
+
+            return from f in _context.BProcessFlow.AsNoTracking()
+                   join b in _context.BBom.AsNoTracking() on f.BomId equals b.BomId
+                   join d in _context.BBomDetail.AsNoTracking() on b.BomCode equals d.BomCode
+                   join m in productsAndMaterials on d.MatCode equals m.code
+                   where f.FlowCode.Equals(flowCode)
+                   select m;
+        }
+
         // PUT: api/Materials/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBMaterial([FromRoute] int id, [FromBody] BMaterial bMaterial)
