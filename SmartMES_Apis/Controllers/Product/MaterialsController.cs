@@ -52,10 +52,8 @@ namespace SmartMES_Apis.Controllers.Product
         [HttpGet("Options")]
         public IQueryable GetOptions([FromQuery] string flowCode)
         {
-            var materials = from m in _context.BMaterial.AsNoTracking()
-                            select new { code = m.MatCode, name = "  物料/" + m.MatName };
-            var products = from p in _context.BProduct.AsNoTracking()
-                           select new { code = p.ProductCode, name = "半成品/" + p.ProductName };
+            var materials = _context.BMaterial.AsNoTracking().Select(e => new { code = e.MatCode, name = "物  料/" + e.MatName });
+            var products = _context.BProduct.AsNoTracking().Select(e => new { code = e.ProductCode, name = "半成品/" + e.ProductName });
             var productsAndMaterials = products.Union(materials);
 
             return from f in _context.BProcessFlow.AsNoTracking()
