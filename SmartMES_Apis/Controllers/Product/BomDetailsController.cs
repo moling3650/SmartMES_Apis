@@ -33,6 +33,10 @@ namespace SmartMES_Apis.Controllers.Product
                 {
                     bomCode = bom.BomCode;
                 }
+                else
+                {
+                    return new List<BBomDetail>();
+                }
             }
             if (!String.IsNullOrWhiteSpace(bomCode))
             {
