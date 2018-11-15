@@ -54,7 +54,7 @@ namespace SmartMES_Apis.Controllers.Product
 
         // api/Boms/Validate?bomCode=bCode
         [HttpGet("Validate")]
-        public bool ValidateBBom([FromQuery] string bomCode)
+        public bool Validate([FromQuery] string bomCode)
         {
             if (String.IsNullOrWhiteSpace(bomCode))
             {

@@ -52,6 +52,18 @@ namespace SmartMES_Apis.Controllers.Product
             return Ok(bFormula);
         }
 
+
+        // api/Formulas/Validate?formulaCode=fCode
+        [HttpGet("Validate")]
+        public bool Validate([FromQuery] string formulaCode)
+        {
+            if (String.IsNullOrWhiteSpace(formulaCode))
+            {
+                return false;
+            }
+            return !_context.BFormula.Any(e => e.FormulaCode.Equals(formulaCode));
+        }
+
         // PUT: api/Formulas/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBFormula([FromRoute] int id, [FromBody] BFormula bFormula)
