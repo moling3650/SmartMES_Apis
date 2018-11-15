@@ -29,6 +29,7 @@ namespace SmartMES_Apis.Controllers.Product
             return _context.BProduct;
         }
 
+        // GET: api/Products/CascaderOptions
         [HttpGet("CascaderOptions")]
         public IQueryable GetBProductCascaderOptions()
         {
