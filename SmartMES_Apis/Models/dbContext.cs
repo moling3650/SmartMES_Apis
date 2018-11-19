@@ -540,7 +540,7 @@ namespace SmartMES_Apis.Models
             {
                 entity.ToTable("B_Formula");
 
-                entity.Property(e => e.Id).HasColumnName("ID");
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.BaseQty)
                     .HasColumnName("base_qty")
@@ -580,7 +580,7 @@ namespace SmartMES_Apis.Models
             {
                 entity.ToTable("B_Formula_Detail");
 
-                entity.Property(e => e.Id).HasColumnName("ID");
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.CreateDate)
                     .HasColumnName("create_date")
@@ -664,7 +664,7 @@ namespace SmartMES_Apis.Models
 
                 entity.Property(e => e.Img)
                     .HasColumnName("img")
-                    .HasColumnType("image");
+                    .HasMaxLength(100);
 
                 entity.Property(e => e.MachineCode)
                     .IsRequired()
@@ -791,6 +791,7 @@ namespace SmartMES_Apis.Models
                     .HasColumnType("datetime");
 
                 entity.Property(e => e.MachineCode)
+                    .IsRequired()
                     .HasColumnName("machine_code")
                     .HasMaxLength(50);
 
@@ -5635,7 +5636,9 @@ namespace SmartMES_Apis.Models
                     .HasColumnName("input_time")
                     .HasColumnType("datetime");
 
-                entity.Property(e => e.Lvl).HasColumnName("lvl");
+                entity.Property(e => e.Lvl)
+                    .HasColumnName("lvl")
+                    .HasDefaultValueSql("((5))");
 
                 entity.Property(e => e.MainOrder)
                     .HasColumnName("main_order")
