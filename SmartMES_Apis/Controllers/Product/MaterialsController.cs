@@ -50,18 +50,33 @@ namespace SmartMES_Apis.Controllers.Product
 
         // GET: api/Materials/Options
         [HttpGet("Options")]
-        public IQueryable GetOptions([FromQuery] string flowCode)
+        public IQueryable GetOptions([FromQuery] string flowCode, [FromQuery] string formulaCode)
         {
             var materials = _context.BMaterial.AsNoTracking().Select(e => new { code = e.MatCode, name = "物  料/" + e.MatName });
             var products = _context.BProduct.AsNoTracking().Select(e => new { code = e.ProductCode, name = "半成品/" + e.ProductName });
             var productsAndMaterials = products.Union(materials);
 
-            return from f in _context.BProcessFlow.AsNoTracking()
-                   join b in _context.BBom.AsNoTracking() on f.BomId equals b.BomId
-                   join d in _context.BBomDetail.AsNoTracking() on b.BomCode equals d.BomCode
-                   join m in productsAndMaterials on d.MatCode equals m.code
-                   where f.FlowCode.Equals(flowCode)
-                   select m;
+            if (!String.IsNullOrWhiteSpace(flowCode))
+            {
+                return from f in _context.BProcessFlow.AsNoTracking()
+                       join b in _context.BBom.AsNoTracking() on f.BomId equals b.BomId
+                       join d in _context.BBomDetail.AsNoTracking() on b.BomCode equals d.BomCode
+                       join m in productsAndMaterials on d.MatCode equals m.code
+                       where f.FlowCode.Equals(flowCode)
+                       select m;
+            }
+            else if (!String.IsNullOrWhiteSpace(formulaCode))
+            {
+                return from f in _context.BFormula.AsNoTracking()
+                       join d in _context.BBomDetail.AsNoTracking() on f.BomCode equals d.BomCode
+                       join m in productsAndMaterials on d.MatCode equals m.code
+                       where f.FormulaCode.Equals(formulaCode)
+                       select m;
+            }
+            else
+            {
+                return productsAndMaterials;
+            }
         }
 
         // PUT: api/Materials/5
