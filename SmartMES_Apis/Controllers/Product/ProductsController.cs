@@ -34,12 +34,12 @@ namespace SmartMES_Apis.Controllers.Product
         public IQueryable GetBProductCascaderOptions()
         {
             return _context.BProductType.GroupJoin(_context.BProduct, 
-                                              pt => pt.Typecode,
-                                              p => p.Typecode,
+                                              pt => pt.TypeCode,
+                                              p => p.TypeCode,
                                               (pt, pList) => 
                                               new
                                               {
-                                                  value = pt.Typecode,
+                                                  value = pt.TypeCode,
                                                   label = pt.TypeName,
                                                   children = pList.Select(p => new { value = p.ProductCode, label = p.ProductName })
                                               });

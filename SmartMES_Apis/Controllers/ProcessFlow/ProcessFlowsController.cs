@@ -33,8 +33,8 @@ namespace SmartMES_Apis.Controllers.ProcessFlow
         public IQueryable GetBProcessFlowCascaderOptions()
         {
             var products = _context.BProduct.AsNoTracking().GroupJoin(_context.BProcessFlow, p => p.ProductCode, pf => pf.ProductCode, 
-                (p, pfList) => new { title = p.ProductName, typeCode = p.Typecode, children = pfList.Select(pf => new { id = pf.FlowCode, title = pf.FlowName, data = pf }) });
-            return _context.BProductType.AsNoTracking().GroupJoin(products, pt => pt.Typecode, p => p.typeCode,
+                (p, pfList) => new { title = p.ProductName, typeCode = p.TypeCode, children = pfList.Select(pf => new { id = pf.FlowCode, title = pf.FlowName, data = pf }) });
+            return _context.BProductType.AsNoTracking().GroupJoin(products, pt => pt.TypeCode, p => p.typeCode,
                 (pt, pList) => new { title = pt.TypeName, children = pList });
         }
 
