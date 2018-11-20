@@ -7,6 +7,7 @@ namespace SmartMES_Apis.Models
     {
         public int Id { get; set; }
         public string MachineCode { get; set; }
+        public string StationCode { get; set; }
         public string MouldCode { get; set; }
         public DateTime? InstallTime { get; set; }
         public string EmpCode { get; set; }

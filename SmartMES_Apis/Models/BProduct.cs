@@ -8,7 +8,7 @@ namespace SmartMES_Apis.Models
         public int ProductId { get; set; }
         public string ProductCode { get; set; }
         public string ProductName { get; set; }
-        public string Typecode { get; set; }
+        public string TypeCode { get; set; }
         public string VersionCode { get; set; }
         public string Cmn { get; set; }
         public string Description { get; set; }

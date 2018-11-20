@@ -2219,6 +2219,7 @@ namespace SmartMES_Apis.Models
                 entity.Property(e => e.PrintBind).HasColumnName("print_bind");
 
                 entity.Property(e => e.ProductCode)
+                    .IsRequired()
                     .HasColumnName("product_code")
                     .HasMaxLength(40);
 
@@ -2234,8 +2235,9 @@ namespace SmartMES_Apis.Models
                     .HasColumnName("station_valid")
                     .HasColumnType("decimal(5, 2)");
 
-                entity.Property(e => e.Typecode)
-                    .HasColumnName("typecode")
+                entity.Property(e => e.TypeCode)
+                    .IsRequired()
+                    .HasColumnName("type_code")
                     .HasMaxLength(30);
 
                 entity.Property(e => e.Unit)
@@ -2283,8 +2285,9 @@ namespace SmartMES_Apis.Models
                     .HasColumnName("parameter")
                     .HasMaxLength(50);
 
-                entity.Property(e => e.Typecode)
-                    .HasColumnName("typecode")
+                entity.Property(e => e.TypeCode)
+                    .IsRequired()
+                    .HasColumnName("type_code")
                     .HasMaxLength(30);
             });
 
@@ -2320,12 +2323,13 @@ namespace SmartMES_Apis.Models
                     .HasColumnName("description")
                     .HasMaxLength(50);
 
-                entity.Property(e => e.TypeName)
-                    .HasColumnName("type_name")
+                entity.Property(e => e.TypeCode)
+                    .IsRequired()
+                    .HasColumnName("type_code")
                     .HasMaxLength(30);
 
-                entity.Property(e => e.Typecode)
-                    .HasColumnName("typecode")
+                entity.Property(e => e.TypeName)
+                    .HasColumnName("type_name")
                     .HasMaxLength(30);
             });
 
@@ -3923,6 +3927,10 @@ namespace SmartMES_Apis.Models
 
                 entity.Property(e => e.MouldCode)
                     .HasColumnName("mould_code")
+                    .HasMaxLength(30);
+
+                entity.Property(e => e.StationCode)
+                    .HasColumnName("station_code")
                     .HasMaxLength(30);
             });
 
