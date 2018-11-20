@@ -52,6 +52,17 @@ namespace SmartMES_Apis.Controllers.ProcessFlow
             return Ok(bProcessControlItemDetail);
         }
 
+        // api/Boms/Validate?bomCode=bCode
+        [HttpGet("Validate")]
+        public bool Validate([FromQuery] int? controlId, [FromQuery] int? pid)
+        {
+            if (controlId == null || pid == null)
+            {
+                return false;
+            }
+            return !_context.BProcessControlItemDetail.Any(e => e.ControlId == controlId && e.Pid == pid);
+        }
+
         // PUT: api/ProcessControlItemDetails/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBProcessControlItemDetail([FromRoute] int id, [FromBody] BProcessControlItemDetail bProcessControlItemDetail)
