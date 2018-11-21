@@ -53,15 +53,15 @@ namespace SmartMES_Apis.Controllers.Mould
             return Ok(bMouldModel);
         }
 
-        // GET: api/MouldModels/Validate?mouldCode=mCode
+        // GET: api/MouldModels/Validate?modelCode=mCode
         [HttpGet("Validate")]
-        public bool Validate([FromQuery] string mouldCode)
+        public bool Validate([FromQuery] string modelCode)
         {
-            if (String.IsNullOrWhiteSpace(mouldCode))
+            if (String.IsNullOrWhiteSpace(modelCode))
             {
                 return false;
             }
-            return !_context.BMouldModel.Any(e => e.ModelCode.Equals(mouldCode));
+            return !_context.BMouldModel.Any(e => e.ModelCode.Equals(modelCode));
         }
 
         // PUT: api/MouldModels/5

@@ -52,15 +52,15 @@ namespace SmartMES_Apis.Controllers.WorkTool
             return Ok(bWorkToolModel);
         }
 
-        // GET: api/WorkToolModels/Validate?mouldCode=mCode
+        // GET: api/WorkToolModels/Validate?modelCode=mCode
         [HttpGet("Validate")]
-        public bool Validate([FromQuery] string mouldCode)
+        public bool Validate([FromQuery] string modelCode)
         {
-            if (String.IsNullOrWhiteSpace(mouldCode))
+            if (String.IsNullOrWhiteSpace(modelCode))
             {
                 return false;
             }
-            return !_context.BWorkToolModel.Any(e => e.ModelCode.Equals(mouldCode));
+            return !_context.BWorkToolModel.Any(e => e.ModelCode.Equals(modelCode));
         }
 
         // PUT: api/WorkToolModels/5

@@ -53,15 +53,15 @@ namespace SmartMES_Apis.Controllers.Machine
         }
 
 
-        // GET: api/MachineModels/Validate?mouldCode=mCode
+        // GET: api/MachineModels/Validate?modelCode=mCode
         [HttpGet("Validate")]
-        public bool Validate([FromQuery] string mouldCode)
+        public bool Validate([FromQuery] string modelCode)
         {
-            if (String.IsNullOrWhiteSpace(mouldCode))
+            if (String.IsNullOrWhiteSpace(modelCode))
             {
                 return false;
             }
-            return !_context.BMachineModel.Any(e => e.ModelCode.Equals(mouldCode));
+            return !_context.BMachineModel.Any(e => e.ModelCode.Equals(modelCode));
         }
 
         // PUT: api/MachineModels/5
