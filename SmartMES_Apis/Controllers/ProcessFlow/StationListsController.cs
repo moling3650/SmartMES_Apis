@@ -48,6 +48,20 @@ namespace SmartMES_Apis.Controllers.ProcessFlow
             return Ok(bStationList);
         }
 
+        // api/StationLists/CascaderOptions
+        [HttpGet("CascaderOptions")]
+        public IQueryable GetCascaderOptions([FromQuery] string ip)
+        {
+            var stations = _context.BStationList.ToList();
+            if (!String.IsNullOrWhiteSpace(ip))
+            {
+                stations = stations.Where(e => e.IpAddress.Equals(ip)).ToList();
+            }
+            return _context.BProcessList
+                .GroupJoin(stations, p => p.ProcessCode, s => s.ProcessCode, (p, sList) => new { value = p.ProcessCode, label = p.ProcessName, children = sList.Select(s => new { value = s.StationCode, label = s.StationName }) })
+                .Where(p => p.children.Count() > 0);
+        }
+
         // PUT: api/StationLists/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBStationList([FromRoute] int id, [FromBody] BStationList bStationList)
