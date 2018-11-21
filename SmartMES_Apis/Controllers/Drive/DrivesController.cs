@@ -52,6 +52,21 @@ namespace SmartMES_Apis.Controllers.Drive
             return Ok(sDriveList);
         }
 
+        // GET: api/Drives/GroupByClass
+        [HttpGet("GroupByClass")]
+        public IQueryable GetSDrivesByClass()
+        {
+            return from d in _context.SDriveList
+                   join t in _context.BDriveType on d.TypeId equals t.TypeId
+                   group d by t.DriveClass into g
+                   select new
+                   {
+                       driveClass = g.Key,
+                       drives = g
+                   };
+                   
+        }
+
         // PUT: api/Drives/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutSDriveList([FromRoute] int id, [FromBody] SDriveList sDriveList)
