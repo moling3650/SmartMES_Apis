@@ -5832,8 +5832,8 @@ namespace SmartMES_Apis.Models
 
                 entity.Property(e => e.IsStaff).HasColumnName("is_staff");
 
-                entity.Property(e => e.PassWprd)
-                    .HasColumnName("pass_wprd")
+                entity.Property(e => e.Password)
+                    .HasColumnName("password")
                     .HasMaxLength(30);
 
                 entity.Property(e => e.PhoneNum)

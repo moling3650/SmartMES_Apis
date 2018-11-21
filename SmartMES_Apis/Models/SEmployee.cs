@@ -7,7 +7,7 @@ namespace SmartMES_Apis.Models
     {
         public string EmpCode { get; set; }
         public string EmpName { get; set; }
-        public string PassWprd { get; set; }
+        public string Password { get; set; }
         public string PhoneNum { get; set; }
         public string Address { get; set; }
         public int? Sex { get; set; }
