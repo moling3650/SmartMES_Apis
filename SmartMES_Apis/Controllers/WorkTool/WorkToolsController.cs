@@ -52,6 +52,17 @@ namespace SmartMES_Apis.Controllers.WorkTool
             return Ok(bWorkTool);
         }
 
+        // GET: api/WorkTools/Validate?workToolCode=mCode
+        [HttpGet("Validate")]
+        public bool Validate([FromQuery] string workToolCode)
+        {
+            if (String.IsNullOrWhiteSpace(workToolCode))
+            {
+                return false;
+            }
+            return !_context.BWorkTool.Any(e => e.WorkToolCode.Equals(workToolCode));
+        }
+
         // PUT: api/WorkTools/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBWorkTool([FromRoute] int id, [FromBody] BWorkTool bWorkTool)

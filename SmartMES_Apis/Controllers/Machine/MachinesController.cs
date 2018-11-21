@@ -52,6 +52,17 @@ namespace SmartMES_Apis.Controllers.Machine
             return Ok(bMachine);
         }
 
+        // GET: api/Machines/Validate?machineCode=mCode
+        [HttpGet("Validate")]
+        public bool Validate([FromQuery] string machineCode)
+        {
+            if (String.IsNullOrWhiteSpace(machineCode))
+            {
+                return false;
+            }
+            return !_context.BMachine.Any(e => e.MachineCode.Equals(machineCode));
+        }
+
         // PUT: api/Machines/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBMachine([FromRoute] int id, [FromBody] BMachine bMachine)

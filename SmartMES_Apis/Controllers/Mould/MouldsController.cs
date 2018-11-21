@@ -52,6 +52,17 @@ namespace SmartMES_Apis.Controllers.Mould
             return Ok(bMoulds);
         }
 
+        // GET: api/Moulds/Validate?mouldCode=mCode
+        [HttpGet("Validate")]
+        public bool Validate([FromQuery] string mouldCode)
+        {
+            if (String.IsNullOrWhiteSpace(mouldCode))
+            {
+                return false;
+            }
+            return !_context.BMoulds.Any(e => e.MouldCode.Equals(mouldCode));
+        }
+
         // PUT: api/Moulds/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBMoulds([FromRoute] int id, [FromBody] BMoulds bMoulds)
