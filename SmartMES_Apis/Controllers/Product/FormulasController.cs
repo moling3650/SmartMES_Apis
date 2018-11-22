@@ -24,8 +24,16 @@ namespace SmartMES_Apis.Controllers.Product
 
         // GET: api/Formulas
         [HttpGet]
-        public IEnumerable<BFormula> GetBFormula([FromQuery] string bomCode)
+        public IQueryable<BFormula> GetBFormula([FromQuery] string bomCode, [FromQuery] string flowCode)
         {
+            if (!String.IsNullOrWhiteSpace(flowCode))
+            {
+                return from f in _context.BFormula
+                       join b in _context.BBom on f.BomCode equals b.BomCode
+                       join p in _context.BProcessFlow on b.BomId equals p.BomId
+                       where p.FlowCode.Equals(flowCode)
+                       select f;
+            }
             if (!String.IsNullOrWhiteSpace(bomCode))
             {
                 return _context.BFormula.AsNoTracking().Where(e => e.BomCode.Equals(bomCode));

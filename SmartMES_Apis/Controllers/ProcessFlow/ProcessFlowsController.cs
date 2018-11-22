@@ -24,8 +24,12 @@ namespace SmartMES_Apis.Controllers.ProcessFlow
 
         // GET: api/ProcessFlows
         [HttpGet]
-        public IEnumerable<BProcessFlow> GetBProcessFlow()
+        public IEnumerable<BProcessFlow> GetBProcessFlow([FromQuery] string productCode)
         {
+            if (!String.IsNullOrWhiteSpace(productCode))
+            {
+                return _context.BProcessFlow.Where(e => e.ProductCode.Equals(productCode));
+            }
             return _context.BProcessFlow;
         }
 

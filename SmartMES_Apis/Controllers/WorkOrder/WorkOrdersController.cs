@@ -60,6 +60,17 @@ namespace SmartMES_Apis.Controllers.WorkOrder
             return orders;
         }
 
+        // api/WorkOrders/Validate?orderNo=xxx
+        [HttpGet("Validate")]
+        public bool Validate([FromQuery] string orderNo)
+        {
+            if (String.IsNullOrWhiteSpace(orderNo))
+            {
+                return false;
+            }
+            return !_context.PWorkOrder.Any(e => e.OrderNo.Equals(orderNo));
+        }
+
         // PUT: api/WorkOrders/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPWorkOrder([FromRoute] int id, [FromBody] PWorkOrder pWorkOrder)
