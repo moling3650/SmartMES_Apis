@@ -114,7 +114,12 @@ namespace SmartMES_Apis.Controllers.WorkOrder
             {
                 return BadRequest(ModelState);
             }
-
+            var wsCode = (from w in _context.BWorkShop
+                          join g in _context.BWorkGroup on w.Wsid equals g.Wsid
+                          join f in _context.BProcessFlowDetail on g.GroupCode equals f.ProcessFromGroup
+                          where f.FlowCode.Equals(pWorkOrder.FlowCode) && f.Idx == 1
+                          select w).FirstOrDefault()?.WsCode;
+            pWorkOrder.WorkshopCode = wsCode;
             _context.PWorkOrder.Add(pWorkOrder);
             await _context.SaveChangesAsync();
 
