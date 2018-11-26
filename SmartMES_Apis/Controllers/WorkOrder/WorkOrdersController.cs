@@ -24,8 +24,12 @@ namespace SmartMES_Apis.Controllers.WorkOrder
 
         // GET: api/WorkOrders
         [HttpGet]
-        public IEnumerable<PWorkOrder> GetPWorkOrder()
+        public IEnumerable<PWorkOrder> GetPWorkOrder([FromQuery] string mainOrder)
         {
+            if (!String.IsNullOrWhiteSpace(mainOrder))
+            {
+                return _context.PWorkOrder.Where(e => e.MainOrder.Equals(mainOrder));
+            }
             return _context.PWorkOrder;
         }
 
