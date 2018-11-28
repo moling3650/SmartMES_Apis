@@ -5605,22 +5605,20 @@ namespace SmartMES_Apis.Models
 
             modelBuilder.Entity<PWorkOrder>(entity =>
             {
-                entity.HasKey(e => new { e.Id, e.OrderNo })
+                entity.HasKey(e => e.Id)
                     .ForSqlServerIsClustered(false);
 
                 entity.ToTable("P_WorkOrder");
+
+                entity.HasIndex(e => e.OrderNo)
+                    .HasName("IX_P_OrderNo")
+                    .IsUnique();
 
                 entity.HasIndex(e => e.PlannedTime)
                     .HasName("IX_P_WorkOrder")
                     .ForSqlServerIsClustered();
 
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .ValueGeneratedOnAdd();
-
-                entity.Property(e => e.OrderNo)
-                    .HasColumnName("order_no")
-                    .HasMaxLength(40);
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Co).HasColumnName("CO");
 
@@ -5637,6 +5635,7 @@ namespace SmartMES_Apis.Models
                     .HasMaxLength(50);
 
                 entity.Property(e => e.FlowCode)
+                    .IsRequired()
                     .HasColumnName("flow_code")
                     .HasMaxLength(30);
 
@@ -5653,10 +5652,17 @@ namespace SmartMES_Apis.Models
                     .HasDefaultValueSql("((5))");
 
                 entity.Property(e => e.MainOrder)
+                    .IsRequired()
                     .HasColumnName("main_order")
                     .HasMaxLength(50);
 
+                entity.Property(e => e.OrderNo)
+                    .IsRequired()
+                    .HasColumnName("order_no")
+                    .HasMaxLength(40);
+
                 entity.Property(e => e.ParentOrder)
+                    .IsRequired()
                     .HasColumnName("parent_order")
                     .HasMaxLength(40);
 
@@ -5665,6 +5671,7 @@ namespace SmartMES_Apis.Models
                     .HasColumnType("datetime");
 
                 entity.Property(e => e.ProductCode)
+                    .IsRequired()
                     .HasColumnName("product_code")
                     .HasMaxLength(30);
 
