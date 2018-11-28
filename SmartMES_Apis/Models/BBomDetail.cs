@@ -7,8 +7,8 @@ namespace SmartMES_Apis.Models
     {
         public int BomDetailId { get; set; }
         public string BomCode { get; set; }
+        public int MatType { get; set; }
         public string MatCode { get; set; }
-        public int? MatType { get; set; }
         public decimal? Qty { get; set; }
         public int? BaseQty { get; set; }
         public decimal? Wastage { get; set; }

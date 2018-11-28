@@ -300,8 +300,13 @@ namespace SmartMES_Apis.Models
 
                 entity.ToTable("B_Bom");
 
+                entity.HasIndex(e => e.BomCode)
+                    .HasName("UK_B_Bom")
+                    .IsUnique();
+
                 entity.HasIndex(e => e.BomId)
-                    .HasName("IX_B_Bom");
+                    .HasName("IX_B_Bom")
+                    .IsUnique();
 
                 entity.Property(e => e.BomId).HasColumnName("bom_id");
 
@@ -351,6 +356,7 @@ namespace SmartMES_Apis.Models
                 entity.Property(e => e.BeCtrl).HasColumnName("be_ctrl");
 
                 entity.Property(e => e.BomCode)
+                    .IsRequired()
                     .HasColumnName("bom_code")
                     .HasMaxLength(30);
 
@@ -359,6 +365,7 @@ namespace SmartMES_Apis.Models
                 entity.Property(e => e.EnableSubstitute).HasColumnName("enable_Substitute");
 
                 entity.Property(e => e.MatCode)
+                    .IsRequired()
                     .HasColumnName("mat_code")
                     .HasMaxLength(40);
 
