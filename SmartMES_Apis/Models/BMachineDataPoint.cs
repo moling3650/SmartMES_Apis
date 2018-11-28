@@ -10,6 +10,7 @@ namespace SmartMES_Apis.Models
         public string MachineCode { get; set; }
         public int? PointType { get; set; }
         public string DriveCode { get; set; }
+        public int? DcType { get; set; }
         public DateTime? InputTime { get; set; }
         public string Description { get; set; }
         public string Parameter { get; set; }

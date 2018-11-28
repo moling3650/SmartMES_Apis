@@ -778,6 +778,10 @@ namespace SmartMES_Apis.Models
                     .HasColumnName("dataPoint_name")
                     .HasMaxLength(50);
 
+                entity.Property(e => e.DcType)
+                    .HasColumnName("dc_type")
+                    .HasDefaultValueSql("((0))");
+
                 entity.Property(e => e.Description)
                     .HasColumnName("description")
                     .HasMaxLength(200);
@@ -797,7 +801,7 @@ namespace SmartMES_Apis.Models
 
                 entity.Property(e => e.Parameter)
                     .HasColumnName("parameter")
-                    .HasMaxLength(50);
+                    .HasMaxLength(100);
 
                 entity.Property(e => e.PointType).HasColumnName("point_type");
 
