@@ -144,8 +144,20 @@ namespace SmartMES_Apis.Controllers.WorkOrder
             {
                 return NotFound();
             }
-
-            _context.PWorkOrder.Remove(pWorkOrder);
+            var orders = new List<PWorkOrder>();
+            if (pWorkOrder.MainOrder.Equals(pWorkOrder.OrderNo))
+            {
+                orders = _context.PWorkOrder.Where(e => e.MainOrder.Equals(pWorkOrder.MainOrder)).ToList();
+            }
+            else
+            {
+                var orderList = _context.PWorkOrder.Where(e => e.MainOrder.Equals(pWorkOrder.MainOrder)).ToList();
+                orders = GetOrders(pWorkOrder.OrderNo, orderList).ToList();
+            }
+            foreach (var order in orders)
+            {
+                _context.PWorkOrder.Remove(order);
+            }
             await _context.SaveChangesAsync();
 
             return Ok(pWorkOrder);
@@ -154,6 +166,13 @@ namespace SmartMES_Apis.Controllers.WorkOrder
         private bool PWorkOrderExists(int id)
         {
             return _context.PWorkOrder.Any(e => e.Id == id);
+        }
+
+        // 递归获取工单以及所有下级所属工单
+        private IEnumerable<PWorkOrder> GetOrders (string orderNo, IEnumerable<PWorkOrder> orderList)
+        {
+            return orderList.Where(e => e.OrderNo.Equals(orderNo))
+                            .Concat(orderList.Where(e => e.ParentOrder.Equals(orderNo)).SelectMany(e => GetOrders(e.OrderNo, orderList)));
         }
     }
 }
