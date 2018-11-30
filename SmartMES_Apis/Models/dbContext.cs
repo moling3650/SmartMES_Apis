@@ -319,7 +319,8 @@ namespace SmartMES_Apis.Models
 
                 entity.Property(e => e.CreateTime)
                     .HasColumnName("create_time")
-                    .HasColumnType("datetime");
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.Designator)
                     .HasColumnName("designator")
@@ -1773,6 +1774,10 @@ namespace SmartMES_Apis.Models
                 entity.ToTable("B_Process_Flow");
 
                 entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.BomCode)
+                    .HasColumnName("bom_code")
+                    .HasMaxLength(30);
 
                 entity.Property(e => e.BomId).HasColumnName("bom_id");
 

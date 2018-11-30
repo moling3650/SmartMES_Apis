@@ -13,5 +13,6 @@ namespace SmartMES_Apis.Models
         public DateTime? CreateDate { get; set; }
         public int? State { get; set; }
         public int? BomId { get; set; }
+        public string BomCode { get; set; }
     }
 }
