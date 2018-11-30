@@ -24,16 +24,12 @@ namespace SmartMES_Apis.Controllers.Product
 
         // GET: api/BomDetails
         [HttpGet]
-        public IEnumerable<BBomDetail> GetBBomDetail([FromQuery] string bomCode, [FromQuery] string productCode, [FromQuery] string version)
+        public IEnumerable<BBomDetail> GetBBomDetail([FromQuery] string bomCode, [FromQuery] string productCode)
         {
-            if (!(String.IsNullOrWhiteSpace(version) && String.IsNullOrWhiteSpace(productCode)))
+            if (!String.IsNullOrWhiteSpace(productCode))
             {
-                var bom = _context.BBom.Where(e => e.ProductCode.Equals(productCode) && e.VersionCode.Equals(version)).FirstOrDefault();
-                if (bom != null)
-                {
-                    bomCode = bom.BomCode;
-                }
-                else
+                bomCode = _context.BBom.Where(e => e.ProductCode.Equals(productCode)).FirstOrDefault()?.BomCode;
+                if (bomCode  == null)
                 {
                     return new List<BBomDetail>();
                 }

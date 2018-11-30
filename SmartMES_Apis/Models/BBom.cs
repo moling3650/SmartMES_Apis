@@ -13,7 +13,7 @@ namespace SmartMES_Apis.Models
         public string Designator { get; set; }
         public string Discription { get; set; }
         public int? Enable { get; set; }
-        public DateTime? CreateTime { get; set; }
+        public DateTime CreateTime { get; set; }
         public int? IsSplit { get; set; }
     }
 }
