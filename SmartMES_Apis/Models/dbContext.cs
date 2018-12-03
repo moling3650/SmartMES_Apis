@@ -181,7 +181,7 @@ namespace SmartMES_Apis.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=192.168.0.126;Database=SMART_MES;UID=sa;Pwd=1234;");
+                optionsBuilder.UseSqlServer("Server=192.168.1.23;Database=SMART_MES;UID=sa;Pwd=1234;");
             }
         }
 
@@ -764,14 +764,28 @@ namespace SmartMES_Apis.Models
 
                 entity.Property(e => e.ControlId).HasColumnName("control_id");
 
+                entity.Property(e => e.DriveCode)
+                    .HasColumnName("drive_code")
+                    .HasMaxLength(50);
+
                 entity.Property(e => e.MachineCode)
                     .IsRequired()
                     .HasColumnName("machine_code")
                     .HasMaxLength(30);
 
+                entity.Property(e => e.Parameter)
+                    .HasColumnName("parameter")
+                    .HasMaxLength(100);
+
                 entity.Property(e => e.PointId).HasColumnName("point_id");
 
                 entity.Property(e => e.RunAt).HasColumnName("run_at");
+
+                entity.Property(e => e.ToMonitor).HasColumnName("to_monitor");
+
+                entity.Property(e => e.TriggerCondition).HasColumnName("trigger_condition");
+
+                entity.Property(e => e.TriggerType).HasColumnName("trigger_type");
             });
 
             modelBuilder.Entity<BMachineDataPoint>(entity =>
@@ -1738,28 +1752,13 @@ namespace SmartMES_Apis.Models
 
                 entity.Property(e => e.ControlId).HasColumnName("control_id");
 
-                entity.Property(e => e.DriveCode)
-                    .IsRequired()
-                    .HasColumnName("drive_code")
-                    .HasMaxLength(30);
-
                 entity.Property(e => e.GroupCount).HasColumnName("group_count");
 
                 entity.Property(e => e.Lcl)
                     .HasColumnName("lcl")
                     .HasColumnType("decimal(10, 2)");
 
-                entity.Property(e => e.Parameter)
-                    .HasColumnName("parameter")
-                    .HasMaxLength(50);
-
                 entity.Property(e => e.Pid).HasColumnName("pid");
-
-                entity.Property(e => e.ToMonitor).HasColumnName("to_monitor");
-
-                entity.Property(e => e.TriggerCondition).HasColumnName("trigger_condition");
-
-                entity.Property(e => e.TriggerType).HasColumnName("trigger_type");
 
                 entity.Property(e => e.Ucl)
                     .HasColumnName("ucl")
