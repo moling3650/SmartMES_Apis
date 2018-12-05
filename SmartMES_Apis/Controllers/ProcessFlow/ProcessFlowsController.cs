@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -40,6 +41,28 @@ namespace SmartMES_Apis.Controllers.ProcessFlow
                 (p, pfList) => new { title = p.ProductName, typeCode = p.TypeCode, children = pfList.Select(pf => new { id = pf.FlowCode, title = pf.FlowName, data = pf }) });
             return _context.BProductType.AsNoTracking().GroupJoin(products, pt => pt.TypeCode, p => p.typeCode,
                 (pt, pList) => new { title = pt.TypeName, children = pList });
+        }
+
+        [HttpGet("SubProcessFlows")]
+        public IDictionary GetSubProcessFlows()
+        {
+            var productCodes = _context.BBomDetail.Where(e => e.MatType == 0).Select(e => e.MatCode).Distinct();
+            var products = from c in productCodes
+                           join f in _context.BProcessFlow on c equals f.ProductCode
+                           group f by c into g
+                           select new { productCode = g.Key, flows = g.Select(e => e.FlowCode) };
+
+            return (from f in _context.BProcessFlow
+                   join b in _context.BBom on f.BomId equals b.BomId
+                    join d in _context.BBomDetail on b.BomCode equals d.BomCode
+                    join p in products on d.MatCode equals p.productCode
+                    where b.Enable == 1 && b.IsSplit == 1
+                   group p by f.FlowCode into g
+                   select new
+                   {
+                       parentFlowCode = g.Key,
+                       products = g
+                   }).ToDictionary(f => f.parentFlowCode, f => f.products);
         }
 
 

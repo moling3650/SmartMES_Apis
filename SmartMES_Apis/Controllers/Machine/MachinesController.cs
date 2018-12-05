@@ -24,11 +24,15 @@ namespace SmartMES_Apis.Controllers.Machine
 
         // GET: api/Machines
         [HttpGet]
-        public IEnumerable<BMachine> GetBMachine([FromQuery] string modelCode)
+        public IEnumerable<BMachine> GetBMachine([FromQuery] string modelCode, [FromQuery] string stationCode)
         {
             if (!String.IsNullOrEmpty(modelCode))
             {
                 return _context.BMachine.Where(item => item.ModelCode.Equals(modelCode));
+            }
+            if (!String.IsNullOrWhiteSpace(stationCode))
+            {
+                return _context.BMachine.Where(e => e.StationCode.Equals(stationCode));
             }
             return _context.BMachine;
         }

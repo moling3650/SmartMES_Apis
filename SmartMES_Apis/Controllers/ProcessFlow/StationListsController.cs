@@ -24,8 +24,12 @@ namespace SmartMES_Apis.Controllers.ProcessFlow
 
         // GET: api/StationLists
         [HttpGet]
-        public IEnumerable<BStationList> GetBStationList()
+        public IEnumerable<BStationList> GetBStationList([FromQuery] string processCode)
         {
+            if (!String.IsNullOrWhiteSpace(processCode))
+            {
+                return _context.BStationList.Where(e => e.ProcessCode.Equals(processCode));
+            }
             return _context.BStationList;
         }
 
