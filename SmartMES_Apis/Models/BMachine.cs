@@ -21,5 +21,6 @@ namespace SmartMES_Apis.Models
         public string WsCode { get; set; }
         public string Description { get; set; }
         public string Img { get; set; }
+        public string StationCode { get; set; }
     }
 }

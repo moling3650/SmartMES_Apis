@@ -9,6 +9,6 @@ namespace SmartMES_Apis.Models
         public string LineCode { get; set; }
         public string LineName { get; set; }
         public string Description { get; set; }
-        public int? Wsid { get; set; }
+        public int Wsid { get; set; }
     }
 }

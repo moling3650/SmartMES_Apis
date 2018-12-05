@@ -704,6 +704,10 @@ namespace SmartMES_Apis.Models
                     .HasColumnName("state")
                     .HasDefaultValueSql("((-1))");
 
+                entity.Property(e => e.StationCode)
+                    .HasColumnName("station_code")
+                    .HasMaxLength(30);
+
                 entity.Property(e => e.TypeId).HasColumnName("type_id");
 
                 entity.Property(e => e.UseState)
