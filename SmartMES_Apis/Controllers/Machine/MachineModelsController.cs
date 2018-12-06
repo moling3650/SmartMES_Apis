@@ -64,6 +64,14 @@ namespace SmartMES_Apis.Controllers.Machine
             return !_context.BMachineModel.Any(e => e.ModelCode.Equals(modelCode));
         }
 
+        // GET: api/MachineModels/CascaderOptions
+        [HttpGet("CascaderOptions")]
+        public IQueryable CascaderOptions()
+        {
+            var kinds = _context.BMachineKinds.Select(k => new { typeId = k.TypeId, value = k.KindId, label = k.KindName, children = _context.BMachineModel.Where(m => m.KindId == k.KindId).Select(m => new { value = m.ModelCode, label = m.ModelCode }) });
+            return _context.BMachineType.Select(t => new { value = t.TypeId, label = t.TypeName, children = kinds.Where(k => k.typeId == t.TypeId).Select(k => new { k.value, k.label, k.children }) });
+        }
+
         // PUT: api/MachineModels/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBMachineModel([FromRoute] int id, [FromBody] BMachineModel bMachineModel)
