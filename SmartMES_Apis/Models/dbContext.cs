@@ -768,10 +768,6 @@ namespace SmartMES_Apis.Models
 
                 entity.Property(e => e.ControlId).HasColumnName("control_id");
 
-                entity.Property(e => e.DriveCode)
-                    .HasColumnName("drive_code")
-                    .HasMaxLength(50);
-
                 entity.Property(e => e.MachineCode)
                     .IsRequired()
                     .HasColumnName("machine_code")
@@ -785,7 +781,13 @@ namespace SmartMES_Apis.Models
 
                 entity.Property(e => e.RunAt).HasColumnName("run_at");
 
-                entity.Property(e => e.ToMonitor).HasColumnName("to_monitor");
+                entity.Property(e => e.TaskDriveCode)
+                    .HasColumnName("task_drive_code")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.ToMonitor)
+                    .HasColumnName("to_monitor")
+                    .HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.TriggerCondition).HasColumnName("trigger_condition");
 
@@ -804,6 +806,10 @@ namespace SmartMES_Apis.Models
                     .HasColumnName("dataPoint_name")
                     .HasMaxLength(50);
 
+                entity.Property(e => e.DcDriveCode)
+                    .HasColumnName("dc_drive_code")
+                    .HasMaxLength(30);
+
                 entity.Property(e => e.DcType)
                     .HasColumnName("dc_type")
                     .HasDefaultValueSql("((0))");
@@ -811,10 +817,6 @@ namespace SmartMES_Apis.Models
                 entity.Property(e => e.Description)
                     .HasColumnName("description")
                     .HasMaxLength(200);
-
-                entity.Property(e => e.DriveCode)
-                    .HasColumnName("drive_code")
-                    .HasMaxLength(30);
 
                 entity.Property(e => e.InputTime)
                     .HasColumnName("input_time")
@@ -1030,10 +1032,6 @@ namespace SmartMES_Apis.Models
                     .HasColumnName("business_name")
                     .HasMaxLength(30);
 
-                entity.Property(e => e.DriveCode)
-                    .HasColumnName("drive_code")
-                    .HasMaxLength(30);
-
                 entity.Property(e => e.MachineCode)
                     .IsRequired()
                     .HasColumnName("machine_code")
@@ -1046,6 +1044,10 @@ namespace SmartMES_Apis.Models
                 entity.Property(e => e.PointId).HasColumnName("point_id");
 
                 entity.Property(e => e.RunAt).HasColumnName("run_at");
+
+                entity.Property(e => e.TaskDriveCode)
+                    .HasColumnName("task_drive_code")
+                    .HasMaxLength(30);
 
                 entity.Property(e => e.TriggerCondition).HasColumnName("trigger_condition");
 
@@ -5561,7 +5563,8 @@ namespace SmartMES_Apis.Models
 
                 entity.Property(e => e.CpltQty)
                     .HasColumnName("cplt_qty")
-                    .HasColumnType("decimal(10, 3)");
+                    .HasColumnType("decimal(10, 3)")
+                    .HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.Description)
                     .HasColumnName("description")
@@ -5585,7 +5588,8 @@ namespace SmartMES_Apis.Models
 
                 entity.Property(e => e.NgQty)
                     .HasColumnName("ng_qty")
-                    .HasColumnType("decimal(10, 3)");
+                    .HasColumnType("decimal(10, 3)")
+                    .HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.OrderNo)
                     .HasColumnName("order_no")
@@ -5603,13 +5607,18 @@ namespace SmartMES_Apis.Models
                     .HasColumnName("planned_start_time")
                     .HasColumnType("datetime");
 
+                entity.Property(e => e.ProcessCode)
+                    .HasColumnName("process_code")
+                    .HasMaxLength(30);
+
                 entity.Property(e => e.ProductCode)
                     .HasColumnName("product_code")
                     .HasMaxLength(30);
 
                 entity.Property(e => e.Qty)
                     .HasColumnName("qty")
-                    .HasColumnType("decimal(10, 3)");
+                    .HasColumnType("decimal(10, 3)")
+                    .HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.State).HasColumnName("state");
 

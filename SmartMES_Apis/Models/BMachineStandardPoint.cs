@@ -10,7 +10,7 @@ namespace SmartMES_Apis.Models
         public string BusinessCode { get; set; }
         public string BusinessName { get; set; }
         public int PointId { get; set; }
-        public string DriveCode { get; set; }
+        public string TaskDriveCode { get; set; }
         public int? RunAt { get; set; }
         public int TriggerType { get; set; }
         public int? TriggerCondition { get; set; }

@@ -13,6 +13,7 @@ namespace SmartMES_Apis.Models
         public decimal? Qty { get; set; }
         public decimal? CpltQty { get; set; }
         public decimal? NgQty { get; set; }
+        public string ProcessCode { get; set; }
         public string StationCode { get; set; }
         public int? State { get; set; }
         public string MouldCode { get; set; }

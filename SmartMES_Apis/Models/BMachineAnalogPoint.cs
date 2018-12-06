@@ -14,7 +14,7 @@ namespace SmartMES_Apis.Models
         public int? TriggerType { get; set; }
         public int? TriggerCondition { get; set; }
         public string Parameter { get; set; }
-        public string DriveCode { get; set; }
+        public string TaskDriveCode { get; set; }
         public int? ToMonitor { get; set; }
         public int RunAt { get; set; }
     }
