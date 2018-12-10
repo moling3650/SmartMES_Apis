@@ -130,6 +130,24 @@ namespace SmartMES_Apis.Controllers.WorkOrder
             return CreatedAtAction("GetPWorkOrder", new { id = pWorkOrder.Id }, pWorkOrder);
         }
 
+        // POST: api/WorkOrders/SubOrders
+        [HttpPost("SubOrders")]
+        public async Task<IActionResult> PostPWorkOrder([FromBody] List<PWorkOrder> subOrders)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            if (subOrders.Count == 0)
+            {
+                return BadRequest("orders must not be empty!");
+            }
+            _context.PWorkOrder.AddRange(subOrders);
+            await _context.SaveChangesAsync();
+
+            return Ok(subOrders);
+        }
+
         // DELETE: api/WorkOrders/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePWorkOrder([FromRoute] int id)
