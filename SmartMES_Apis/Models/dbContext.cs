@@ -5669,7 +5669,8 @@ namespace SmartMES_Apis.Models
 
                 entity.Property(e => e.InputTime)
                     .HasColumnName("input_time")
-                    .HasColumnType("datetime");
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.Lvl)
                     .HasColumnName("lvl")

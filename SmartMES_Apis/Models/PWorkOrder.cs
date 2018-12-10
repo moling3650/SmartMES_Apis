@@ -16,7 +16,7 @@ namespace SmartMES_Apis.Models
         public string Co { get; set; }
         public int? Urgency { get; set; }
         public int? State { get; set; }
-        public DateTime? InputTime { get; set; }
+        public DateTime InputTime { get; set; }
         public DateTime? PlannedTime { get; set; }
         public string Customer { get; set; }
         public int? Property { get; set; }
