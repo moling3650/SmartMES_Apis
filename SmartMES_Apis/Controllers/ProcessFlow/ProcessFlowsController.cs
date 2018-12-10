@@ -34,6 +34,7 @@ namespace SmartMES_Apis.Controllers.ProcessFlow
             return _context.BProcessFlow;
         }
 
+        // GET: api/ProcessFlows/CascaderOptions
         [HttpGet("CascaderOptions")]
         public IQueryable GetBProcessFlowCascaderOptions()
         {
@@ -43,6 +44,7 @@ namespace SmartMES_Apis.Controllers.ProcessFlow
                 (pt, pList) => new { title = pt.TypeName, children = pList });
         }
 
+        // GET: api/ProcessFlows/SubProcessFlows
         [HttpGet("SubProcessFlows")]
         public IDictionary GetSubProcessFlows()
         {
@@ -63,6 +65,18 @@ namespace SmartMES_Apis.Controllers.ProcessFlow
                        parentFlowCode = g.Key,
                        products = g
                    }).ToDictionary(f => f.parentFlowCode, f => f.products);
+        }
+
+        // GET: api/ProcessFlows/SplitMap
+        [HttpGet("SplitMap")]
+        public IDictionary GetSplitMap()
+        {
+            var flowMap = from f in _context.BProcessFlow
+                          join d in _context.BProcessFlowDetail on f.FlowCode equals d.FlowCode
+                          join p in _context.BProcessList on d.ProcessFrom equals p.ProcessCode
+                          group p by f.FlowCode into g
+                          select new { flowCode = g.Key, enableSplit = g.Sum(p => p.TaskMode) > 0 };
+            return flowMap.ToDictionary(f => f.flowCode, f => f.enableSplit);
         }
 
 
