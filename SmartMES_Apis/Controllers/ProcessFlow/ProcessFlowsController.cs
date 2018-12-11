@@ -52,7 +52,7 @@ namespace SmartMES_Apis.Controllers.ProcessFlow
             var products = from c in productCodes
                            join f in _context.BProcessFlow on c equals f.ProductCode
                            group f by c into g
-                           select new { productCode = g.Key, flows = g.Select(e => e.FlowCode) };
+                           select new { productCode = g.Key, flows = g.Select(e => new { value = e.FlowCode, label = e.FlowName }) };
 
             return (from f in _context.BProcessFlow
                    join b in _context.BBom on f.BomId equals b.BomId
