@@ -140,7 +140,12 @@ namespace SmartMES_Apis.Controllers.WorkOrder
             }
             if (subOrders.Count == 0)
             {
-                return BadRequest("orders must not be empty!");
+                return BadRequest("保存的工单列表不能为空");
+            }
+            var order = subOrders.First();
+            if (_context.PWorkOrder.Where(e => e.MainOrder == order.MainOrder && e.MainOrder != e.OrderNo).ToList().Count > 1)
+            {
+                return BadRequest("该主工单已拆分");
             }
             _context.PWorkOrder.AddRange(subOrders);
             await _context.SaveChangesAsync();
