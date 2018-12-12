@@ -24,7 +24,7 @@ namespace SmartMES_Apis.Models
         public string ModelCode { get; set; }
         public decimal? WipValid { get; set; }
         public decimal? StationValid { get; set; }
-        public int? ManageType { get; set; }
+        public int ManageType { get; set; }
         public string PedigreeCode { get; set; }
     }
 }
