@@ -1621,7 +1621,10 @@ namespace SmartMES_Apis.Models
                     .HasColumnName("pedigree_name")
                     .HasMaxLength(50);
 
-                entity.Property(e => e.ProductTypeId).HasColumnName("product_type_id");
+                entity.Property(e => e.ProductTypeCode)
+                    .IsRequired()
+                    .HasColumnName("product_type_code")
+                    .HasMaxLength(30);
             });
 
             modelBuilder.Entity<BPointTranslation>(entity =>
