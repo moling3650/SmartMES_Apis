@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -43,6 +44,31 @@ namespace SmartMES_Apis.Controllers.Product
                                                   label = pt.TypeName,
                                                   children = pList.Select(p => new { value = p.ProductCode, label = p.ProductName })
                                               });
+        }
+
+        // GET: api/Products/Formulas
+        [HttpGet("Formulas")]
+        public IDictionary GetFormulas()
+        {
+            return (from f in
+                       (from p in _context.BProduct
+                        where p.ManageType == 1
+                        join b in _context.BBom on p.ProductCode equals b.ProductCode
+                        join f in _context.BFormula on b.BomCode equals f.BomCode into allFormulas
+                        from d in allFormulas.DefaultIfEmpty()
+                        select new
+                        {
+                            productCode = p.ProductCode,
+                            formulaCode = d.FormulaCode,
+                            formulaName = d.FormulaName
+                        })
+                    group f by f.productCode into g
+                    select new
+                    {
+                        productCode = g.Key,
+                        formulas = g.Where(e => e.formulaCode != null).Select(e => new { value = e.formulaCode, label = e.formulaName })
+                    }).ToDictionary(e => e.productCode, e => e.formulas);
+
         }
 
         // GET: api/Products/5
