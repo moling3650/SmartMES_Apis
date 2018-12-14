@@ -25,9 +25,18 @@ namespace SmartMES_Apis.Controllers.Product
 
         // GET: api/Products
         [HttpGet]
-        public IEnumerable<BProduct> GetBProduct()
+        public IEnumerable<BProduct> GetBProduct([FromQuery] string typeCode, [FromQuery] string pedigreeCode)
         {
-            return _context.BProduct;
+            var products = _context.BProduct.AsNoTracking();
+            if (!String.IsNullOrWhiteSpace(typeCode))
+            {
+                products = products.Where(e => e.TypeCode.Equals(typeCode));
+            }
+            if (!String.IsNullOrWhiteSpace(pedigreeCode))
+            {
+                products = products.Where(e => e.PedigreeCode.Equals(pedigreeCode));
+            }
+            return products;
         }
 
         // GET: api/Products/CascaderOptions

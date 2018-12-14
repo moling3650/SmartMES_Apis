@@ -57,10 +57,12 @@ namespace SmartMES_Apis.Controllers.Product
                    {
                        value = t.TypeCode,
                        label = t.TypeName,
+                       rawData = t,
                        children = _context.BPedigree.Where(e => e.ProductTypeCode == t.TypeCode).Select(e => new
                        {
                            value = e.PedigreeCode,
-                           label = e.PedigreeName
+                           label = e.PedigreeName,
+                           rawData = e
                        })
                    };
         }
