@@ -12,7 +12,7 @@ namespace SmartMES_Apis.Models
         public string SimpleName { get; set; }
         public int? TypeId { get; set; }
         public int? State { get; set; }
-        public string UseState { get; set; }
+        public int UseState { get; set; }
         public decimal? ProcessingQty { get; set; }
         public string Manufacturer { get; set; }
         public DateTime? Arrivaldate { get; set; }

@@ -710,11 +710,7 @@ namespace SmartMES_Apis.Models
 
                 entity.Property(e => e.TypeId).HasColumnName("type_id");
 
-                entity.Property(e => e.UseState)
-                    .IsRequired()
-                    .HasColumnName("use_state")
-                    .HasMaxLength(10)
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.UseState).HasColumnName("use_state");
 
                 entity.Property(e => e.WsCode)
                     .HasColumnName("ws_code")
