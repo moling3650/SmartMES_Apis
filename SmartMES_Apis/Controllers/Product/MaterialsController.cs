@@ -24,8 +24,12 @@ namespace SmartMES_Apis.Controllers.Product
 
         // GET: api/Materials
         [HttpGet]
-        public IEnumerable<BMaterial> GetBMaterial()
+        public IEnumerable<BMaterial> GetBMaterial([FromQuery] int? typeId)
         {
+            if (typeId != null)
+            {
+                return _context.BMaterial.Where(e => e.TypeId == typeId);
+            }
             return _context.BMaterial;
         }
 
