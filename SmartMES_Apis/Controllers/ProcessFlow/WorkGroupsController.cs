@@ -24,8 +24,12 @@ namespace SmartMES_Apis.Controllers.ProcessFlow
 
         // GET: api/WorkGroups
         [HttpGet]
-        public IEnumerable<BWorkGroup> GetBWorkGroup()
+        public IEnumerable<BWorkGroup> GetBWorkGroup([FromQuery] int? wsid)
         {
+            if (wsid != null)
+            {
+                return _context.BWorkGroup.Where(e => e.Wsid == wsid);
+            }
             return _context.BWorkGroup;
         }
 
