@@ -48,6 +48,17 @@ namespace SmartMES_Apis.Controllers.Permission
             return Ok(sEmployee);
         }
 
+        // api/Employees/Validate?departCode=code
+        [HttpGet("Validate")]
+        public bool Validate([FromQuery] string empCode)
+        {
+            if (String.IsNullOrWhiteSpace(empCode))
+            {
+                return false;
+            }
+            return !_context.SEmployee.Any(e => e.EmpCode.Equals(empCode));
+        }
+
         // GET: api/Employees/Authorization
         [HttpGet("Authorization")]
         public bool Authorization([FromQuery] string empCode, [FromQuery] string password)

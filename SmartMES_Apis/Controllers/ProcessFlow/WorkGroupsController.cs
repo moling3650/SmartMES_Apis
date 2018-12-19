@@ -48,6 +48,17 @@ namespace SmartMES_Apis.Controllers.ProcessFlow
             return Ok(bWorkGroup);
         }
 
+        // api/WorkGroups/Validate?groupCode=code
+        [HttpGet("Validate")]
+        public bool Validate([FromQuery] string groupCode)
+        {
+            if (String.IsNullOrWhiteSpace(groupCode))
+            {
+                return false;
+            }
+            return !_context.BWorkGroup.Any(e => e.GroupCode.Equals(groupCode));
+        }
+
         // PUT: api/WorkGroups/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBWorkGroup([FromRoute] int id, [FromBody] BWorkGroup bWorkGroup)

@@ -48,6 +48,17 @@ namespace SmartMES_Apis.Controllers.Permission
             return Ok(sDepartment);
         }
 
+        // api/Departments/Validate?departCode=code
+        [HttpGet("Validate")]
+        public bool Validate([FromQuery] string departCode)
+        {
+            if (String.IsNullOrWhiteSpace(departCode))
+            {
+                return false;
+            }
+            return !_context.SDepartment.Any(e => e.DepartCode.Equals(departCode));
+        }
+
         // PUT: api/Departments/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutSDepartment([FromRoute] int id, [FromBody] SDepartment sDepartment)
