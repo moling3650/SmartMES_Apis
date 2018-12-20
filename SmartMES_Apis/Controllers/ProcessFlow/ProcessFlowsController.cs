@@ -34,6 +34,17 @@ namespace SmartMES_Apis.Controllers.ProcessFlow
             return _context.BProcessFlow;
         }
 
+        // api/ProcessFlows/Validate?flowCode=code
+        [HttpGet("Validate")]
+        public bool Validate([FromQuery] string flowCode)
+        {
+            if (String.IsNullOrWhiteSpace(flowCode))
+            {
+                return false;
+            }
+            return !_context.BProcessFlow.Any(e => e.FlowCode.Equals(flowCode));
+        }
+
         // GET: api/ProcessFlows/CascaderOptions
         [HttpGet("CascaderOptions")]
         public IQueryable GetBProcessFlowCascaderOptions()
