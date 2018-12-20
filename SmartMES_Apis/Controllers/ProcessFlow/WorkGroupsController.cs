@@ -63,6 +63,27 @@ namespace SmartMES_Apis.Controllers.ProcessFlow
             return !_context.BWorkGroup.Any(e => e.GroupCode.Equals(groupCode));
         }
 
+        // GET: api/WorkGroups/TreeData
+        [HttpGet("TreeData")]
+        public IQueryable GetTreeData()
+        {
+            return from s in _context.BWorkShop
+                   select new
+                   {
+                       value = s.Wsid,
+                       label = s.WsName,
+                       data = s,
+                       children = from g in _context.BWorkGroup
+                                  where g.Wsid == s.Wsid
+                                  select new
+                                  {
+                                      value = g.GroupCode,
+                                      label = g.GroupName,
+                                      data = g
+                                  }
+                   };
+        }
+
         // PUT: api/WorkGroups/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBWorkGroup([FromRoute] int id, [FromBody] BWorkGroup bWorkGroup)
