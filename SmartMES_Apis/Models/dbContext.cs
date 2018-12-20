@@ -2929,6 +2929,10 @@ namespace SmartMES_Apis.Models
 
                 entity.Property(e => e.Idx).HasColumnName("idx");
 
+                entity.Property(e => e.TimeIncrement)
+                    .HasColumnName("time_increment")
+                    .HasDefaultValueSql("((0))");
+
                 entity.Property(e => e.Wsid).HasColumnName("wsid");
             });
 
@@ -5863,7 +5867,7 @@ namespace SmartMES_Apis.Models
 
                 entity.Property(e => e.EntryDate)
                     .HasColumnName("entry_date")
-                    .HasMaxLength(10);
+                    .HasColumnType("datetime");
 
                 entity.Property(e => e.IsStaff).HasColumnName("is_staff");
 

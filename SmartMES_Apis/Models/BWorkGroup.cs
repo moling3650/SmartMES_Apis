@@ -11,5 +11,6 @@ namespace SmartMES_Apis.Models
         public int Wsid { get; set; }
         public string Description { get; set; }
         public int? Idx { get; set; }
+        public int? TimeIncrement { get; set; }
     }
 }
