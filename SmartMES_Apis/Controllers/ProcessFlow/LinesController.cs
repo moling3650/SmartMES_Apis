@@ -52,6 +52,17 @@ namespace SmartMES_Apis.Controllers.ProcessFlow
             return Ok(bLine);
         }
 
+        // api/Lines/Validate?lineCode=code
+        [HttpGet("Validate")]
+        public bool Validate([FromQuery] string lineCode)
+        {
+            if (String.IsNullOrWhiteSpace(lineCode))
+            {
+                return false;
+            }
+            return !_context.BLine.Any(e => e.LineCode.Equals(lineCode));
+        }
+
         // PUT: api/Lines/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBLine([FromRoute] int id, [FromBody] BLine bLine)

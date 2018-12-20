@@ -48,6 +48,17 @@ namespace SmartMES_Apis.Controllers.ProcessFlow
             return Ok(bProcessType);
         }
 
+        // api/ProcessTypes/Validate?typeCode=code
+        [HttpGet("Validate")]
+        public bool Validate([FromQuery] string typeCode)
+        {
+            if (String.IsNullOrWhiteSpace(typeCode))
+            {
+                return false;
+            }
+            return !_context.BProcessType.Any(e => e.TypeCode.Equals(typeCode));
+        }
+
         // PUT: api/ProcessTypes/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBProcessType([FromRoute] int id, [FromBody] BProcessType bProcessType)
