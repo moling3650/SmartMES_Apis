@@ -99,6 +99,7 @@ namespace SmartMES_Apis.Models
         public virtual DbSet<BTranslationType> BTranslationType { get; set; }
         public virtual DbSet<BWorkGroup> BWorkGroup { get; set; }
         public virtual DbSet<BWorkGroupClass> BWorkGroupClass { get; set; }
+        public virtual DbSet<BWorkGroupClassRest> BWorkGroupClassRest { get; set; }
         public virtual DbSet<BWorkShop> BWorkShop { get; set; }
         public virtual DbSet<BWorkTool> BWorkTool { get; set; }
         public virtual DbSet<BWorkToolKindProperty> BWorkToolKindProperty { get; set; }
@@ -2969,6 +2970,29 @@ namespace SmartMES_Apis.Models
                     .HasColumnName("time_start")
                     .HasMaxLength(30)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<BWorkGroupClassRest>(entity =>
+            {
+                entity.ToTable("B_WorkGroup_Class_Rest");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.ClassId).HasColumnName("class_id");
+
+                entity.Property(e => e.Description)
+                    .HasColumnName("description")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.TimeEnd)
+                    .IsRequired()
+                    .HasColumnName("time_end")
+                    .HasMaxLength(30);
+
+                entity.Property(e => e.TimeStart)
+                    .IsRequired()
+                    .HasColumnName("time_start")
+                    .HasMaxLength(30);
             });
 
             modelBuilder.Entity<BWorkShop>(entity =>
