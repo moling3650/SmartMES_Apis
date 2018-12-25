@@ -22,6 +22,7 @@ namespace SmartMES_Apis.Models
         public virtual DbSet<BBomDetail> BBomDetail { get; set; }
         public virtual DbSet<BChart> BChart { get; set; }
         public virtual DbSet<BChartType> BChartType { get; set; }
+        public virtual DbSet<BDataTranslation> BDataTranslation { get; set; }
         public virtual DbSet<BDisposalProcess> BDisposalProcess { get; set; }
         public virtual DbSet<BDriveType> BDriveType { get; set; }
         public virtual DbSet<BEquipment> BEquipment { get; set; }
@@ -444,6 +445,31 @@ namespace SmartMES_Apis.Models
                 entity.Property(e => e.State)
                     .HasColumnName("state")
                     .HasDefaultValueSql("((1))");
+            });
+
+            modelBuilder.Entity<BDataTranslation>(entity =>
+            {
+                entity.ToTable("B_DataTranslation");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Description)
+                    .HasColumnName("description")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.FieldName)
+                    .HasColumnName("field_name")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Label)
+                    .HasColumnName("label")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.TableName)
+                    .HasColumnName("table_name")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Value).HasColumnName("value");
             });
 
             modelBuilder.Entity<BDisposalProcess>(entity =>
