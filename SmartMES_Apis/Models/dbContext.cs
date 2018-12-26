@@ -71,6 +71,7 @@ namespace SmartMES_Apis.Models
         public virtual DbSet<BProcessFlow> BProcessFlow { get; set; }
         public virtual DbSet<BProcessFlowDetail> BProcessFlowDetail { get; set; }
         public virtual DbSet<BProcessList> BProcessList { get; set; }
+        public virtual DbSet<BProcessMouldList> BProcessMouldList { get; set; }
         public virtual DbSet<BProcessSonStep> BProcessSonStep { get; set; }
         public virtual DbSet<BProcessSonStepList> BProcessSonStepList { get; set; }
         public virtual DbSet<BProcessStep> BProcessStep { get; set; }
@@ -1937,6 +1938,28 @@ namespace SmartMES_Apis.Models
                 entity.Property(e => e.TaskMode).HasColumnName("task_mode");
 
                 entity.Property(e => e.TypeId).HasColumnName("type_id");
+            });
+
+            modelBuilder.Entity<BProcessMouldList>(entity =>
+            {
+                entity.HasKey(e => e.Id)
+                    .ForSqlServerIsClustered(false);
+
+                entity.ToTable("B_Process_Mould_List");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.FlowCode)
+                    .HasColumnName("flow_code")
+                    .HasMaxLength(30);
+
+                entity.Property(e => e.ModelCode)
+                    .HasColumnName("model_code")
+                    .HasMaxLength(30);
+
+                entity.Property(e => e.Pid).HasColumnName("pid");
+
+                entity.Property(e => e.Qty).HasColumnName("qty");
             });
 
             modelBuilder.Entity<BProcessSonStep>(entity =>
