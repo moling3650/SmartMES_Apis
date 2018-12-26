@@ -52,6 +52,24 @@ namespace SmartMES_Apis.Controllers.ProcessFlow
             return Ok(bWorkGroupClass);
         }
 
+        // GET: api/WorkGroupClasses/WorkTime
+        [HttpGet("WorkTime")]
+        public IQueryable GetWorkTime([FromQuery] string groupCode)
+        {
+            return from c in _context.BWorkGroupClass
+                   where c.GroupCode == groupCode
+                   select new
+                   {
+                       c.ClassCode,
+                       c.ClassName,
+                       c.DayStart,
+                       c.DayEnd,
+                       c.TimeStart,
+                       c.TimeEnd,
+                       restTime = _context.BWorkGroupClassRest.Where(r => r.ClassId == c.Cid).OrderBy(r => r.TimeStart)
+                   };
+        }
+
         // PUT: api/WorkGroupClasses/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBWorkGroupClass([FromRoute] int id, [FromBody] BWorkGroupClass bWorkGroupClass)
