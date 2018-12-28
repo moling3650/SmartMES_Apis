@@ -99,6 +99,7 @@ namespace SmartMES_Apis.Models
         public virtual DbSet<BTranslation> BTranslation { get; set; }
         public virtual DbSet<BTranslationDetail> BTranslationDetail { get; set; }
         public virtual DbSet<BTranslationType> BTranslationType { get; set; }
+        public virtual DbSet<BWorkCalendar> BWorkCalendar { get; set; }
         public virtual DbSet<BWorkGroup> BWorkGroup { get; set; }
         public virtual DbSet<BWorkGroupClass> BWorkGroupClass { get; set; }
         public virtual DbSet<BWorkGroupClassRest> BWorkGroupClassRest { get; set; }
@@ -2952,6 +2953,33 @@ namespace SmartMES_Apis.Models
                 entity.Property(e => e.TypeName)
                     .HasColumnName("type_name")
                     .HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<BWorkCalendar>(entity =>
+            {
+                entity.ToTable("B_Work_Calendar");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Classes)
+                    .IsRequired()
+                    .HasColumnName("classes")
+                    .HasMaxLength(30);
+
+                entity.Property(e => e.Day)
+                    .HasColumnName("day")
+                    .HasColumnType("date");
+
+                entity.Property(e => e.GroupCode)
+                    .IsRequired()
+                    .HasColumnName("group_code")
+                    .HasMaxLength(30);
+
+                entity.Property(e => e.WorkTime)
+                    .IsRequired()
+                    .HasColumnName("work_time")
+                    .HasMaxLength(50)
+                    .HasDefaultValueSql("((0))");
             });
 
             modelBuilder.Entity<BWorkGroup>(entity =>
