@@ -24,9 +24,27 @@ namespace SmartMES_Apis.Controllers.Permission
 
         // GET: api/Employees
         [HttpGet]
-        public IEnumerable<SEmployee> GetSEmployee()
+        public IEnumerable<SEmployee> GetSEmployees([FromQuery] string roleId)
         {
-            return _context.SEmployee;
+            if (!String.IsNullOrWhiteSpace(roleId))
+            {
+                if (roleId.Equals("null"))
+                {
+                    var emps = _context.SEmpInRole.Select(r => r.EmpCode).Distinct();
+                    return _context.SEmployee.Where(e => !emps.Any(ec => ec.Equals(e.EmpCode)));
+                }
+                else
+                {
+                    return from e in _context.SEmployee
+                           join r in _context.SEmpInRole on e.EmpCode equals r.EmpCode
+                           where r.RoleId.Equals(roleId)
+                           select e;
+                }
+            }
+            else
+            {
+                return _context.SEmployee;
+            }
         }
 
         // GET: api/Employees/5
