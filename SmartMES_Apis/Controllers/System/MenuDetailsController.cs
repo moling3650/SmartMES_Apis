@@ -54,13 +54,14 @@ namespace SmartMES_Apis.Controllers.System
             {
                 value = e.Id,
                 label = e.MenuName,
-                children = from m in _context.SModule
-                           join d in _context.SMenuDetail on m.ModuleCode equals d.ModuleCode
+                data = e,
+                children = from d in _context.SMenuDetail
                            where d.ParentId == e.Id
                            select new
                            {
-                               value = m.Url,
-                               label = d.MenuName
+                               value = d.Id,
+                               label = d.MenuName,
+                               data = d
                            }
             });
         }

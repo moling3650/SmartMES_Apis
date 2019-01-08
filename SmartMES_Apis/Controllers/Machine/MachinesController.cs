@@ -41,20 +41,25 @@ namespace SmartMES_Apis.Controllers.Machine
 
         // GET: api/Machines/WithProcess
         [HttpGet("WithProcess")]
-        public IQueryable GetBMachinesWithProcess()
+        public IQueryable GetBMachinesWithProcess([FromQuery] int? wsid)
         {
             return from m in _context.BMachine
                    join s in _context.BStationList on m.StationCode equals s.StationCode
                    join p in _context.BProcessList on s.ProcessCode equals p.ProcessCode
-                   orderby p.Idx, s.StationName
+                   join w in _context.BWorkGroup on p.GroupCode equals w.GroupCode
+                   group new
+                   {
+                       m.MachineCode,
+                       m.MachineName,
+                       m.Img
+                   } by new { w.Wsid, p.ProcessCode, p.ProcessName, p.Idx } into g
+                   orderby g.Key.Idx
                    select new
                    {
-                       p.ProcessCode,
-                       p.ProcessName,
-                       s.StationCode,
-                       s.StationName,
-                       m.MachineCode,
-                       m.MachineName
+                       g.Key.Wsid,
+                       g.Key.ProcessCode,
+                       g.Key.ProcessName,
+                       children = g
                    };
         }
 
