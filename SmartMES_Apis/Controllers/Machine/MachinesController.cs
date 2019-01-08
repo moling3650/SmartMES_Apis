@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -35,6 +36,46 @@ namespace SmartMES_Apis.Controllers.Machine
                 return _context.BMachine.Where(e => e.StationCode.Equals(stationCode));
             }
             return _context.BMachine;
+        }
+
+
+        // GET: api/Machines/WithProcess
+        [HttpGet("WithProcess")]
+        public IQueryable GetBMachinesWithProcess()
+        {
+            return from m in _context.BMachine
+                   join s in _context.BStationList on m.StationCode equals s.StationCode
+                   join p in _context.BProcessList on s.ProcessCode equals p.ProcessCode
+                   orderby p.Idx, s.StationName
+                   select new
+                   {
+                       p.ProcessCode,
+                       p.ProcessName,
+                       s.StationCode,
+                       s.StationName,
+                       m.MachineCode,
+                       m.MachineName
+                   };
+        }
+
+        // GET: api/Machines/WithStatus
+        [HttpGet("WithStatus")]
+        public IDictionary GetBMachinesWithStatus()
+        {
+
+            return (from s in _context.PMachineStateRecord
+                   where s.BeCurrent == 1
+                   join o in _context.POrderMachine on s.MachineCode equals o.MachineCode into orders
+                   from m in orders.DefaultIfEmpty()
+                   select new
+                   {
+                       s.MachineCode,
+                       s.State,
+                       s.StopReason,
+                       s.TroubleCode,
+                       m.OrderNo,
+                       m.EmpCode
+                   }).ToDictionary(e => e.MachineCode);
         }
 
         // GET: api/Machines/5
