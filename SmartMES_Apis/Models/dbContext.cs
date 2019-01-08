@@ -29,6 +29,7 @@ namespace SmartMES_Apis.Models
         public virtual DbSet<BEquipmentType> BEquipmentType { get; set; }
         public virtual DbSet<BFormula> BFormula { get; set; }
         public virtual DbSet<BFormulaDetail> BFormulaDetail { get; set; }
+        public virtual DbSet<BFormulaStep> BFormulaStep { get; set; }
         public virtual DbSet<BLine> BLine { get; set; }
         public virtual DbSet<BMachine> BMachine { get; set; }
         public virtual DbSet<BMachineAccessories> BMachineAccessories { get; set; }
@@ -130,6 +131,7 @@ namespace SmartMES_Apis.Models
         public virtual DbSet<PMachineMaintainrecords> PMachineMaintainrecords { get; set; }
         public virtual DbSet<PMachineMouldInstall> PMachineMouldInstall { get; set; }
         public virtual DbSet<PMachineRepairrecords> PMachineRepairrecords { get; set; }
+        public virtual DbSet<PMachineStateRecord> PMachineStateRecord { get; set; }
         public virtual DbSet<PMachineStopRecords> PMachineStopRecords { get; set; }
         public virtual DbSet<PMaintenanceDetail> PMaintenanceDetail { get; set; }
         public virtual DbSet<PMainWorkOrder> PMainWorkOrder { get; set; }
@@ -648,6 +650,80 @@ namespace SmartMES_Apis.Models
                     .IsRequired()
                     .HasColumnName("material_code")
                     .HasMaxLength(30);
+            });
+
+            modelBuilder.Entity<BFormulaStep>(entity =>
+            {
+                entity.HasKey(e => e.StepId);
+
+                entity.ToTable("B_Formula_Step");
+
+                entity.Property(e => e.StepId).HasColumnName("step_id");
+
+                entity.Property(e => e.AllowReuse).HasColumnName("allow_reuse");
+
+                entity.Property(e => e.AutoRestart).HasColumnName("auto_restart");
+
+                entity.Property(e => e.Autorun).HasColumnName("autorun");
+
+                entity.Property(e => e.ConsumePercent).HasColumnName("consume_percent");
+
+                entity.Property(e => e.ConsumeType).HasColumnName("consume_type");
+
+                entity.Property(e => e.CtrlType).HasColumnName("ctrl_type");
+
+                entity.Property(e => e.DriveCode)
+                    .HasColumnName("drive_code")
+                    .HasMaxLength(30);
+
+                entity.Property(e => e.Format)
+                    .HasColumnName("format")
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.FormulaCode)
+                    .IsRequired()
+                    .HasColumnName("formula_code")
+                    .HasMaxLength(30);
+
+                entity.Property(e => e.Idx).HasColumnName("idx");
+
+                entity.Property(e => e.IsRecord).HasColumnName("is_record");
+
+                entity.Property(e => e.MatCode)
+                    .HasColumnName("mat_code")
+                    .HasMaxLength(30);
+
+                entity.Property(e => e.Parameter)
+                    .HasColumnName("parameter")
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.Parameter2)
+                    .HasColumnName("parameter2")
+                    .HasMaxLength(30);
+
+                entity.Property(e => e.StepCode)
+                    .HasColumnName("step_code")
+                    .HasMaxLength(20);
+
+                entity.Property(e => e.StepName)
+                    .HasColumnName("step_name")
+                    .HasMaxLength(30);
+
+                entity.Property(e => e.StepType)
+                    .HasColumnName("step_type")
+                    .HasMaxLength(30);
+
+                entity.Property(e => e.TimeOut)
+                    .HasColumnName("time_out")
+                    .HasMaxLength(30);
+
+                entity.Property(e => e.Triger)
+                    .HasColumnName("triger")
+                    .HasMaxLength(30);
+
+                entity.Property(e => e.TypeId).HasColumnName("type_id");
+
+                entity.Property(e => e.Unit).HasMaxLength(50);
             });
 
             modelBuilder.Entity<BLine>(entity =>
@@ -4106,6 +4182,46 @@ namespace SmartMES_Apis.Models
                     .HasColumnType("datetime");
             });
 
+            modelBuilder.Entity<PMachineStateRecord>(entity =>
+            {
+                entity.HasKey(e => e.Id)
+                    .ForSqlServerIsClustered(false);
+
+                entity.ToTable("P_Machine_State_Record");
+
+                entity.HasIndex(e => e.Id)
+                    .HasName("IX_machine_code")
+                    .ForSqlServerIsClustered();
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.BeCurrent).HasColumnName("be_current");
+
+                entity.Property(e => e.EndTime)
+                    .HasColumnName("end_time")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.MachineCode)
+                    .HasColumnName("machine_code")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.Remarks)
+                    .HasColumnName("remarks")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.StartTime)
+                    .HasColumnName("start_time")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.State).HasColumnName("state");
+
+                entity.Property(e => e.StopReason).HasColumnName("stop_reason");
+
+                entity.Property(e => e.TroubleCode)
+                    .HasColumnName("trouble_code")
+                    .HasMaxLength(50);
+            });
+
             modelBuilder.Entity<PMachineStopRecords>(entity =>
             {
                 entity.ToTable("P_Machine_StopRecords");
@@ -4541,6 +4657,14 @@ namespace SmartMES_Apis.Models
                 entity.ToTable("P_Order_Machine");
 
                 entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.DiispatchingNo)
+                    .HasColumnName("diispatching_no")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.EmpCode)
+                    .HasColumnName("emp_code")
+                    .HasMaxLength(50);
 
                 entity.Property(e => e.FatherOrder)
                     .HasColumnName("father_order")
