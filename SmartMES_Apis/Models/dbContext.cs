@@ -4215,7 +4215,9 @@ namespace SmartMES_Apis.Models
 
                 entity.Property(e => e.State).HasColumnName("state");
 
-                entity.Property(e => e.StopReason).HasColumnName("stop_reason");
+                entity.Property(e => e.StopReason)
+                    .HasColumnName("stop_reason")
+                    .HasMaxLength(50);
 
                 entity.Property(e => e.TroubleCode)
                     .HasColumnName("trouble_code")
