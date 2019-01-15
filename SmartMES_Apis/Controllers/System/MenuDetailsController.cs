@@ -22,8 +22,15 @@ namespace SmartMES_Apis.Controllers.System
 
         // GET: api/MenuDetails
         [HttpGet]
-        public IEnumerable<SMenuDetail> GetSMenuDetail()
+        public IEnumerable<SMenuDetail> GetSMenuDetail([FromQuery] String roleId)
         {
+            if (!String.IsNullOrWhiteSpace(roleId))
+            {
+                return from m in _context.SMenuDetail
+                       join i in _context.SModuleInRole on m.ModuleCode equals i.ModuleCode
+                       where i.RoleId.Equals(roleId)
+                       select m;
+            }
             return _context.SMenuDetail;
         }
 

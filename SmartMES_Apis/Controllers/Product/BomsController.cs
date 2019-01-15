@@ -52,7 +52,7 @@ namespace SmartMES_Apis.Controllers.Product
             return Ok(bBom);
         }
 
-        // api/Boms/Validate?bomCode=bCode
+        // api/Boms/Validate?bomCode=code
         [HttpGet("Validate")]
         public bool Validate([FromQuery] string bomCode)
         {
