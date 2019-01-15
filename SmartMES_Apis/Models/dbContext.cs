@@ -1586,13 +1586,13 @@ namespace SmartMES_Apis.Models
                     .HasColumnName("ng_name")
                     .HasMaxLength(30);
 
-                entity.Property(e => e.TypeCode1)
-                    .HasColumnName("type_code")
+                entity.Property(e => e.ProductType)
+                    .IsRequired()
+                    .HasColumnName("product_type")
                     .HasMaxLength(30);
 
-                entity.Property(e => e.Typecode)
-                    .IsRequired()
-                    .HasColumnName("typecode")
+                entity.Property(e => e.TypeCode)
+                    .HasColumnName("type_code")
                     .HasMaxLength(30);
             });
 
@@ -1614,9 +1614,9 @@ namespace SmartMES_Apis.Models
                     .HasColumnName("reason_name")
                     .HasMaxLength(30);
 
-                entity.Property(e => e.Typecode)
+                entity.Property(e => e.TypeCode)
                     .IsRequired()
-                    .HasColumnName("typecode")
+                    .HasColumnName("type_code")
                     .HasMaxLength(30);
             });
 
