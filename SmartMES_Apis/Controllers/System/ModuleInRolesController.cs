@@ -85,6 +85,35 @@ namespace SmartMES_Apis.Controllers.System
             return NoContent();
         }
 
+        // PUT: api/ModuleInRoles
+        [HttpPut]
+        public async Task<IActionResult> PutSModuleInRole([FromBody] List<SModuleInRole> sModuleInRoleList)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            if (sModuleInRoleList.Count == 0)
+            {
+                return NotFound();
+            }
+            var roleId = sModuleInRoleList.First().RoleId;
+            var deleteList = _context.SModuleInRole.Where(e => e.RoleId.Equals(roleId));
+            _context.SModuleInRole.RemoveRange(deleteList);
+            _context.SModuleInRole.AddRange(sModuleInRoleList);
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
+
+            return Ok(sModuleInRoleList);
+        }
+
         // POST: api/ModuleInRoles
         [HttpPost]
         public async Task<IActionResult> PostSModuleInRole([FromBody] SModuleInRole sModuleInRole)
