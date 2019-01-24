@@ -52,6 +52,17 @@ namespace SmartMES_Apis.Controllers.ProcessFlow
             return Ok(bProcessStep);
         }
 
+
+        [HttpGet("Validate")]
+        public bool Validate([FromQuery] string stepCode)
+        {
+            if (String.IsNullOrWhiteSpace(stepCode))
+            {
+                return false;
+            }
+            return !_context.BProcessStep.Any(e => e.StepCode.Equals(stepCode));
+        }
+
         // PUT: api/ProcessSteps/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBProcessStep([FromRoute] int id, [FromBody] BProcessStep bProcessStep)

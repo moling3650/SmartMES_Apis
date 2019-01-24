@@ -134,6 +134,16 @@ namespace SmartMES_Apis.Controllers.Product
             return NoContent();
         }
 
+        [HttpGet("Validate")]
+        public bool Validate([FromQuery] string productCode)
+        {
+            if (String.IsNullOrWhiteSpace(productCode))
+            {
+                return false;
+            }
+            return !_context.BProduct.Any(e => e.ProductCode.Equals(productCode));
+        }
+
         // POST: api/Products
         [HttpPost]
         public async Task<IActionResult> PostBProduct([FromBody] BProduct bProduct)

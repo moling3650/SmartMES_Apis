@@ -56,6 +56,17 @@ namespace SmartMES_Apis.Controllers.Drive
             return Ok(sDriveList);
         }
 
+        // GET: api/Drives?code=code
+        [HttpGet("Validate")]
+        public bool Validate([FromQuery] string driveCode)
+        {
+            if (String.IsNullOrWhiteSpace(driveCode))
+            {
+                return false;
+            }
+            return !_context.SDriveList.Any(e => e.DriveCode.Equals(driveCode));
+        }
+
         // GET: api/Drives/GroupByClass
         [HttpGet("GroupByClass")]
         public IQueryable GetSDrivesByClass()

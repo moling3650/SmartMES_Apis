@@ -83,6 +83,18 @@ namespace SmartMES_Apis.Controllers.Product
             }
         }
 
+
+        // api/Boms/Materials?code=code
+        [HttpGet("Validate")]
+        public bool Validate([FromQuery] string matCode)
+        {
+            if (String.IsNullOrWhiteSpace(matCode))
+            {
+                return false;
+            }
+            return !_context.BMaterial.Any(e => e.MatCode.Equals(matCode));
+        }
+
         // PUT: api/Materials/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBMaterial([FromRoute] int id, [FromBody] BMaterial bMaterial)

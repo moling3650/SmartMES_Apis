@@ -60,6 +60,17 @@ namespace SmartMES_Apis.Controllers.ProcessFlow
             return Ok(bProcessList);
         }
 
+        // GET: api/ProcessLists?code=code
+        [HttpGet("Validate")]
+        public bool Validate([FromQuery] string processCode)
+        {
+            if (String.IsNullOrWhiteSpace(processCode))
+            {
+                return false;
+            }
+            return !_context.BProcessList.Any(e => e.ProcessCode.Equals(processCode));
+        }
+
         // PUT: api/ProcessLists/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBProcessList([FromRoute] int id, [FromBody] BProcessList bProcessList)

@@ -52,6 +52,17 @@ namespace SmartMES_Apis.Controllers.ProcessFlow
             return Ok(bStationList);
         }
 
+
+        [HttpGet("Validate")]
+        public bool Validate([FromQuery] string stationCode)
+        {
+            if (String.IsNullOrWhiteSpace(stationCode))
+            {
+                return false;
+            }
+            return !_context.BStationList.Any(e => e.StationCode.Equals(stationCode));
+        }
+
         // api/StationLists/CascaderOptions
         [HttpGet("CascaderOptions")]
         public IQueryable GetCascaderOptions([FromQuery] string ip)
