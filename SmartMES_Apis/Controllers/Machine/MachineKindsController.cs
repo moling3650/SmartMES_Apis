@@ -24,11 +24,15 @@ namespace SmartMES_Apis.Controllers.Machine
 
         // GET: api/MachineKinds
         [HttpGet]
-        public IEnumerable<BMachineKinds> GetBMachineKinds([FromQuery] int? typeId)
+        public IEnumerable<BMachineKinds> GetBMachineKinds([FromQuery] int? typeId, [FromQuery] int? kindId)
         {
             if (typeId != null)
             {
                 return _context.BMachineKinds.Where(item => item.TypeId == typeId);
+            }
+            if (kindId != null)
+            {
+                return _context.BMachineKinds.Where(item => item.KindId == kindId);
             }
             return _context.BMachineKinds;
         }

@@ -25,8 +25,15 @@ namespace SmartMES_Apis.Controllers.Machine
 
         // GET: api/Machines
         [HttpGet]
-        public IEnumerable<BMachine> GetBMachine([FromQuery] string modelCode, [FromQuery] string stationCode)
+        public IEnumerable<BMachine> GetBMachine([FromQuery] string modelCode, [FromQuery] string stationCode, [FromQuery] int? kindId)
         {
+            if (kindId != null)
+            {
+                return from m in _context.BMachine
+                       join mo in _context.BMachineModel on m.ModelCode equals mo.ModelCode
+                       where mo.KindId == kindId
+                       select m;
+            }
             if (!String.IsNullOrEmpty(modelCode))
             {
                 return _context.BMachine.Where(item => item.ModelCode.Equals(modelCode));
