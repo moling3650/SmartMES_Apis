@@ -187,7 +187,7 @@ namespace SmartMES_Apis.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=192.168.1.23;Database=SMART_MES;UID=sa;Pwd=1234;");
+                optionsBuilder.UseSqlServer("Server=192.168.1.57;Database=SMART_MES;UID=sa;Pwd=Sa123456;");
             }
         }
 
