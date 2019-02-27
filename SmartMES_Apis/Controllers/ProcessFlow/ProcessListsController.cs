@@ -24,8 +24,12 @@ namespace SmartMES_Apis.Controllers.ProcessFlow
 
         // GET: api/ProcessLists
         [HttpGet]
-        public IEnumerable<BProcessList> GetBProcessList([FromQuery] string groupCode, [FromQuery] string flowCode)
+        public IEnumerable<BProcessList> GetBProcessList([FromQuery] string groupCode, [FromQuery] string flowCode, [FromQuery] string orderNo)
         {
+            if (!String.IsNullOrWhiteSpace(orderNo))
+            {
+                flowCode = _context.PWorkOrder.Where(e => e.OrderNo.Equals(orderNo)).FirstOrDefault()?.FlowCode;
+            }
             if (!String.IsNullOrWhiteSpace(flowCode))
             {
                 return from f in _context.BProcessFlowDetail.AsNoTracking()
