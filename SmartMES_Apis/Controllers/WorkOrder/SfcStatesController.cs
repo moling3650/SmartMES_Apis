@@ -68,6 +68,7 @@ namespace SmartMES_Apis.Controllers.WorkOrder
                          p.ProductCode,
                          p.ProductName,
                          productType = p.TypeCode,
+                         s.Qty,
                          failTimes
                      }).FirstOrDefault());
         }
